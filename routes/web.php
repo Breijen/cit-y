@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
+
+use App\Http\Controllers\ActivityController;
 
 
 Route::get('/', [PostController::class, 'index']);
@@ -62,3 +65,5 @@ Route::post('/like/comments/{comment}', [LikeController::class, 'likeComment'])-
 //Volgen en ontvolgen
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+
+Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');

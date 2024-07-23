@@ -23,7 +23,8 @@
                     } else {
                         echo $diff->s . 's';
                     }
-                @endphp    </div>
+                @endphp
+                </div>
             </div>
         @auth    
         @if    (Auth::user()->id === $post->user_id)
