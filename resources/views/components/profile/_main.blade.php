@@ -37,7 +37,7 @@
             <p class="text-xs sm:text-sm text-gray-400">{{ $user->username }}</p>
             <p class="mt-2 text-gray-400 text-xs">{{ $user->bio }}</p>
         @auth      
-     @if(auth()->user() === $user)
+     @if(auth()->user()->id !== $user->id)
             @if(auth()->user()->following->contains($user))
                 <div class="mt-4">
                     <form action="{{ route('unfollow', $user->id) }}" method="POST" class="inline">

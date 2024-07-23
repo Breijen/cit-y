@@ -1,13 +1,13 @@
 <div class="pb-4 p-2 w-full">
-    <div class="p-3 cursor-pointer" onclick="location.href='/{{$comment->post['username']}}/{{$comment->post['uuid']}}';">
+    <div class="pb-2 cursor-pointer" onclick="location.href='/{{$comment->post['username']}}/{{$comment->post['uuid']}}';">
         <div class="flex items-center mb-4">
             <img src="{{$comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
                 <div class="flex">
-                    <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline lowercase">
+                    <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline">
                     {{$comment->user->username}} 
                     </a>
-                    <p class="text-gray-400 pl-2 pt-[2px] text-placeholder text-sm">
+                    <p class="text-gray-400 pl-1 pt-[2px] text-placeholder text-sm">
                         @php
                         $now = new DateTime();
                         $ago = new DateTime($comment->created_at);
