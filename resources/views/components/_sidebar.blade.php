@@ -1,6 +1,6 @@
-<aside class="hidden sm:block flex top-24 sticky h-[calc(100vh-6rem)] w-12 sm:w-20 flex flex-col space-y-14 items-center justify-center bg-background text-icons">
+<aside class="hidden md:flex sm:fixed flex top-0 fixed h-full w-8 sm:w-20 flex-col space-y-14 items-center justify-center bg-background text-icons">
     <!-- Profile -->
-    <a href="/" class="h-6 w-6 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
     </a>
 
@@ -27,7 +27,7 @@
 
 <!-- FOOTER ALS HET SCHERM TE KLEIN IS -->
 
-<aside class="block sm:hidden fixed bottom-2 w-full flex justify-around items-center bg-background text-icons py-2">
+<aside class="block md:hidden fixed bottom-2 w-full flex justify-around items-center bg-background text-icons py-2">
     <!-- Profile -->
     <a href="/" class="h-6 w-6 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
