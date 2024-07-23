@@ -12,7 +12,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->with('user', 'comments.user')->get()->map(function ($post) {
-            $post->isLikedByUser = auth()->user() ? $post->likedBy->contains(auth()->id()) : false;
             return $post;
         });
 
@@ -33,8 +32,6 @@ class PostController extends Controller
         if ($post->user->username !== $username) {
             abort(404);
         }
-
-        $post->isLikedByUser = auth()->user() ? $post->likedBy->contains(auth()->id()) : false;
 
         return view('posts.show', compact('post', 'comments'));
     }

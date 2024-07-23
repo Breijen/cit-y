@@ -70,7 +70,7 @@
     <!-- Tabs -->
     <div class="bg-content_bg w-full rounded-lg mt-40">
         <div class="flex justify-around p-4 border-b border-divider">
-            <button class="text-red-500 border-b-2 border-red-500 pb-2" onclick="showTab('posts')">Posts</button>
+            <button class="text-red-500 border-b-2 border-red-500" onclick="showTab('posts')">Posts</button>
             <button class="text-placeholder" onclick="showTab('replies')">Replies</button>
             <button class="text-placeholder" onclick="showTab('highlights')">Highlights</button>
             <button class="text-placeholder" onclick="showTab('media')">Media</button>
@@ -87,8 +87,8 @@
             @include("components.profile._posts")
         </div>
 
-        <div id="replies" class="flex tab-content hidden justify-center items-center">
-            <p class="text-placeholder p-4">Functionaliteit werkt nog niet.</p>
+        <div id="replies" class="tab-content hidden p-4">
+            @include("components.profile._comments")
         </div>
 
         <div id="highlights" class="flex tab-content hidden justify-center items-center">
@@ -99,8 +99,8 @@
             <p class="text-placeholder p-4">Functionaliteit werkt nog niet.</p>
         </div>
 
-        <div id="likes" class="flex tab-content hidden justify-center items-center">
-            <p class="text-placeholder p-4">Functionaliteit werkt nog niet.</p>
+        <div id="likes" class="tab-content hidden p-4">
+            @include("components.profile._liked")
         </div>
     </div>
 
