@@ -4,7 +4,7 @@
             <img src="{{$post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
                 <a href="/profile/{{$post['username']}}" class="font-bold text-lg text-white hover:underline lowercase">{{$post['username']}}</a>
-                <div class="text-gray-400 text-sm">
+                <div class="text-placeholder text-sm">
                 @php
                     $now = new DateTime();
                     $ago = new DateTime($post->created_at);

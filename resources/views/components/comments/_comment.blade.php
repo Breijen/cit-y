@@ -3,30 +3,38 @@
         <div class="flex items-center mb-4">
             <img src="{{$comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
-                <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline">{{$comment->user->username}}</a>
-                <div class="text-gray-400 text-sm">
-                @php
-                    $now = new DateTime();
-                    $ago = new DateTime($comment->created_at);
-                    $diff = $now->diff($ago);
+                <div class="flex">
+                    <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline">
+                    {{$comment->user->username}} 
+                    </a>
+                    <p class="text-gray-400 pl-2 pt-[2px] text-placeholder text-sm">
+                        @php
+                        $now = new DateTime();
+                        $ago = new DateTime($comment->created_at);
+                        $diff = $now->diff($ago);
 
-                    if ($diff->y > 0) {
-                        echo $diff->y . 'y';
-                    } elseif ($diff->m > 0) {
-                        echo $diff->m . 'm';
-                    } elseif ($diff->d > 0) {
-                        echo $diff->d . 'd';
-                    } elseif ($diff->h > 0) {
-                        echo $diff->h . 'h';
-                    } elseif ($diff->i > 0) {
-                        echo $diff->i . 'm';
-                    } else {
-                        echo $diff->s . 's';
-                    }
-                @endphp    </div>
+                        if ($diff->y > 0) {
+                            echo $diff->y . 'y';
+                        } elseif ($diff->m > 0) {
+                            echo $diff->m . 'm';
+                        } elseif ($diff->d > 0) {
+                            echo $diff->d . 'd';
+                        } elseif ($diff->h > 0) {
+                            echo $diff->h . 'h';
+                        } elseif ($diff->i > 0) {
+                            echo $diff->i . 'm';
+                        } else {
+                            echo $diff->s . 's';
+                        }
+                    @endphp
+                    </p>
+                </div>
+                <div class="text-placeholder text-sm">
+                Replied to {{$comment->post->user->username}}
+                </div>
             </div>
         @auth    
-        @if    (auth()->user()->id === $comment->user_id)
+        @if(auth()->user()->id === $comment->user_id)
             <div class="inline-flex ml-auto" data-twe-dropdown-ref >
                 <button
                 class="hover:bg-background rounded-md p-1"
