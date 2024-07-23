@@ -132,4 +132,11 @@ class UserController extends Controller
         // Redirect back to the previous page
         return back();
     }
+
+    public function showLikedPosts(User $user)
+    {
+        $likedPosts = $user->likedPosts()->orderBy('created_at', 'desc')->get();
+
+        return view('user.liked_posts', compact('user', 'likedPosts'));
+    }
 }
