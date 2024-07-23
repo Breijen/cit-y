@@ -1,8 +1,8 @@
 <div class="p-3 cursor-pointer">
-    <div class="flex items-center mb-4" >
+    <div class="flex items-center mb-4" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
         <img src="{{$post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
         <div>
-            <a href="/profile/{{$post['username']}}" class="font-bold text-lg text-white hover:underline">{{$post['username']}}</a>
+            <a href="/profile/{{$post['username']}}" class="font-bold text-lg text-white hover:underline lowercase">{{$post['username']}}</a>
             <div class="text-gray-400 text-sm">
             @php
                 $now = new DateTime();
@@ -108,7 +108,9 @@
 <hr class="border-divider">
 
 <script>
-    async function passContent(content, id) {
+    function passContent(content, id) {
+        event.stopPropagation();
+
         document.getElementById('postEditForm').action = "/posts/" + id;
         document.getElementById('postDeleteForm').action = "/posts/" + id;
         document.getElementById('postEditInput').value = content;

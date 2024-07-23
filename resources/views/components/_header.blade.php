@@ -9,7 +9,7 @@
                 <div class="text-md font-medium ">{{auth()->user()->firstname}} {{auth()->user()->lastname}}</div>
 
 
-                <div class="text-sm font-regular">{{auth()->user()->username}}</div>
+                <div class="text-sm font-regular lowercase">{{auth()->user()->username}}</div>
         </div>
         
         <a href="/profile/{{auth()->user()->username}}">
@@ -17,7 +17,7 @@
         </a>
 
         @else
-        <a href="/login" class="text-center h-11 w-24 bg-white text-black text-lg rounded-xl p-2 font-semibold">
+        <a href="/login" class="text-center h-10 w-24 bg-white text-black text-lg rounded-xl p-2 font-semibold">
             <p>Log in</p>
         </a>
         @endauth

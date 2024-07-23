@@ -2,7 +2,7 @@
     <div class="flex items-center mb-4">
         <img src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3 border-2 border-divider">
         <div>
-            <a href="/profile/{{ auth()->user()->username }}" class="font-bold text-lg text-white">{{ auth()->user()->username }}</a>
+            <a href="/profile/{{ auth()->user()->username }}" class="font-bold text-lg text-white lowercase">{{ auth()->user()->username }}</a>
             <div class="text-placeholder text-sm">Everyone can reply</div>
         </div>
     </div>
