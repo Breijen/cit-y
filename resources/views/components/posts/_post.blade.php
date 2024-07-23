@@ -56,7 +56,7 @@
     @endif
     </div>
     @auth
-    <div class="flex z-20 items-center mt-4 text-gray-300 space-x-6">
+    <div class="flex items-center mt-4 text-gray-300 space-x-6">
         <!-- Likes Icon and Count -->
         <div class="flex items-center space-x-2">
             <form action="{{ route('likePost', ['post' => $post->id]) }}" method="POST" id="likeForm-{{ $post->id }}">
@@ -107,7 +107,6 @@
 </div>
 <hr class="border-divider">
 
-@script
 <script>
     async function passContent(content, id) {
         document.getElementById('postEditForm').action = "/posts/" + id;
@@ -119,4 +118,3 @@
         document.getElementById('createCommentForm').action = "/posts/" + id + "/comments";
     }
 </script>
-@endscript

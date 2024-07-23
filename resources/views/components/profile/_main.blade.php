@@ -6,8 +6,8 @@
     
     <!-- Profile Picture and Info -->
     <div class="flex items-center absolute top-0 left-0 w-full mt-32">
-        <div class="relative mt-6 ml-6">
-            <img class="w-32 h-32 rounded-full border-2 border-divider object-cover bg-background" src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" style="position: relative; top: -64px; left: 18px;">
+        <div class="relative mt-2 sm:mt-6 sm:ml-6">
+            <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full border-2 border-divider object-cover bg-background" src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" style="position: relative; top: -64px; left: 18px;">
         </div>
     </div>
     
@@ -15,7 +15,7 @@
     @auth
     @if(auth()->user()->username === $user->username)
     <div class="absolute top-0 right-0 m-4 space-x-1">
-        <button class="p-2 border border-icons bg-divider text-sm text-white font-medium rounded-md"
+        <button class="hidden sm:inline p-2 border border-icons bg-divider text-sm text-white font-medium rounded-md"
             onclick="passProfileContent('{{ $user->bio }}', '{{ $user->website }}')"
             data-twe-toggle="modal"
             data-twe-target="#editProfileModal"
@@ -24,51 +24,51 @@
             data-twe-dropdown-item-ref>Edit Profile</button>
         <form class="inline" method="POST" action="/logout">
             @csrf
-            <button type="submit" class="relative text-center h-9 w-16 bg-white text-black text-sm rounded-md p-2 font-semibold">Logout</button>
+            <button type="submit" class="relative text-center h-9 w-16 bg-white text-black text-sm rounded-md font-semibold">Logout</button>
         </form>
     </div>
 
     @endif
-    @endauth    
+    @endauth        
 
-    <div class="flex absolute w-full">
-        <div class="w-full ml-48 mt-2">
-            <h1 class="text-2xl font-bold text-white">{{ $user->firstname }} {{ $user->lastname }}</h1>
-            <p class="text-gray-400">{{ $user->username }}</p>
+    <div class="flex absolute mt-2 w-full">
+        <div class="w-full mt-1 sm:ml-48 sm:mt-0 px-4 sm:px-0">
+            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ $user->lastname }}</h1>
+            <p class="text-xs sm:text-sm text-gray-400">{{ $user->username }}</p>
             <p class="mt-2 text-gray-400 text-xs">{{ $user->bio }}</p>
-            @auth         
-            @if(auth()->user()->id !== $user->id)
-                @if(auth()->user()->following->contains($user))
+        @auth      
+     @if(auth()->user() === $user)
+            @if(auth()->user()->following->contains($user))
                 <div class="mt-4">
                     <form action="{{ route('unfollow', $user->id) }}" method="POST" class="inline">
-                        @csrf              
+                    @csrf                  
                         <button type="submit" class="bg-content_bg p-1 border border-icons text-placeholder rounded-lg w-24 text-sm">Following</button>
                     </form>
                 </div>
-                @else        
+            @else            
                 <div class="mt-4">
                     <form action="{{ route('follow', $user->id) }}" method="POST" class="inline">
-                        @csrf        
+                    @csrf            
                         <button type="submit" class="bg-white border p-1 rounded-lg w-24 text-sm">Follow</button>
                     </form>
                 </div>
-                @endif        
-            @endif        
-            @endauth
+            @endif
+            @endif
+        @endauth
         </div>
-    
+
         <!-- Followers and Website -->
-        <div class="space-x-8 justify-end mr-8 mt-2">
-            <div class="w-full flex space-x-2 ml-48 mt-2">
-                <p class="text-gray-400 justify-end text-xs">{{ $user->followerCount }} followers</p>
-                <p class="text-gray-400 justify-end text-xs">-</p>
-                <p class="text-gray-400 justify-end text-xs">{{ $user->website }}</p>
+        <div class="w-full mt-2 sm:mt-0 sm:flex sm:justify-end px-4">
+            <div class="flex space-x-2 text-gray-400 justify-end text-xxs sm:text-sm">
+                <p>{{ $user->followerCount }} followers</p>
+                <p>-</p>
+                <p>{{ $user->website }}</p>
             </div>
         </div>
     </div>
 
     <!-- Tabs -->
-    <div class="bg-content_bg w-full rounded-lg mt-32">
+    <div class="bg-content_bg w-full rounded-lg mt-40">
         <div class="flex justify-around p-4 border-b border-divider">
             <button class="text-red-500 border-b-2 border-red-500 pb-2" onclick="showTab('posts')">Posts</button>
             <button class="text-placeholder" onclick="showTab('replies')">Replies</button>
