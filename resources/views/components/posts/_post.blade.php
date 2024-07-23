@@ -1,5 +1,5 @@
 <div class="p-3 cursor-pointer">
-    <div class="flex items-center mb-4" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
+    <div class="flex items-center mb-4" >
         <img src="{{$post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
         <div>
             <a href="/profile/{{$post['username']}}" class="font-bold text-lg text-white hover:underline">{{$post['username']}}</a>
@@ -30,7 +30,7 @@
             <button
             class="hover:bg-background rounded-md p-1"
             type="button"
-            onclick="event.stopPropagation(); passContent('{{$post['content']}}', '{{$post['id']}}')"
+            onclick="passContent('{{$post['content']}}', '{{$post['id']}}')"
             id="postSettingsDropdown"
             data-twe-dropdown-toggle-ref
             aria-expanded="false"
@@ -106,3 +106,17 @@
     @endauth
 </div>
 <hr class="border-divider">
+
+@script
+<script>
+    async function passContent(content, id) {
+        document.getElementById('postEditForm').action = "/posts/" + id;
+        document.getElementById('postDeleteForm').action = "/posts/" + id;
+        document.getElementById('postEditInput').value = content;
+    }
+
+    async function passPost(id) {
+        document.getElementById('createCommentForm').action = "/posts/" + id + "/comments";
+    }
+</script>
+@endscript

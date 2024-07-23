@@ -20,7 +20,4 @@
     @include("components.posts._delete_post_modal")
     @endauth
 
-
-    <script type="text/javascript" src="{{ asset('js/postComponent.js') }}"></script>
-
 @endsection
