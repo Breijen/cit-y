@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto bg-content_bg rounded-lg border border-divider relative">
+<div class="max-w-4xl mx-auto h-auto bg-content_bg rounded-lg mb-32 border border-divider relative">
     <!-- Banner Image -->
     <div class="w-full overflow-hidden rounded-t-lg bg-background" style="height: 150px;">
         <img src="{{ $user->banner ? asset('storage/' . $user->banner) : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=' }}" class="w-full object-cover" style="height: 150px;">

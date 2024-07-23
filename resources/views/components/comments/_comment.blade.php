@@ -4,7 +4,7 @@
             <img src="{{$comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
                 <div class="flex">
-                    <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline">
+                    <a href="/profile/{{$comment->user->username}}" class="font-bold text-lg text-white hover:underline lowercase">
                     {{$comment->user->username}} 
                     </a>
                     <p class="text-gray-400 pl-2 pt-[2px] text-placeholder text-sm">

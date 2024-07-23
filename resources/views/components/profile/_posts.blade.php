@@ -1,4 +1,4 @@
-<div class="h-screen">
+<div class="h-auto">
     <div class="space-y-2 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-lg border border-divider">
         @if($user->posts->count() > 0)
             @foreach($user->posts->sortByDesc('created_at') as $post)
