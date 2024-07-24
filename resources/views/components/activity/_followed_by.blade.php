@@ -2,9 +2,9 @@
     <div class="absolute pt-6 pl-5 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 bg-followed_by rounded-full p-1 border border-content_bg" viewBox="0 0 20 20" fill="white"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
     </div>
-    <div class="pb-4 cursor-pointer" onclick="location.href='/profile/{{$follower->username}}'">
+    <div class="flex pb-4 cursor-pointer" onclick="location.href='/profile/{{$follower->username}}'">
+        <img src="{{$follower->profile_picture ? asset('storage/' . $follower->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=' . urlencode($follower->username) . '&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
         <div class="flex items-center mb-1">
-            <img src="{{$follower->profile_picture ? asset('storage/' . $follower->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=' . urlencode($follower->username) . '&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div class="pl-1">
                 <div class="flex">
                     <a href="/profile/{{$follower->username}}" class="font-bold text-md text-white hover:underline">
@@ -13,7 +13,7 @@
                     <p class="text-gray-400 pl-1 pt-[2px] text-placeholder text-sm">
                     @php
                         $now = new DateTime();
-                        $ago = new DateTime($follower->created_at);
+                        $ago = new DateTime($follower->updated_at);
                         $diff = $now->diff($ago);
 
                         if ($diff->y > 0) {
@@ -32,7 +32,7 @@
                     @endphp
                     </p>
                 </div>
-                <div class="text-placeholder text-sm -mt-1 sm:text-md">
+                <div class="text-placeholder text-sm sm:text-md">
                 started following you
                 </div>
             </div>

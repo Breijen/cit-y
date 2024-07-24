@@ -1,29 +1,15 @@
 <div class="min-h-screen">
     <div class="space-y-2 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-lg border border-divider">
         <div class="posts">
-            @foreach($posts as $post)
-                @if($post->comments->count() > 0)
-                    @foreach($post->comments as $comment)
-                        @if($comment->user->id !== auth()->user()->id)
-                        @include("components.activity._commented_by")
-                      @endif
-                @endforeach
+            @foreach($notifications as $notification)
+                @if($notification['type'] == 'comment')
+                    @include('components.activity._commented_by', ['comment' => $notification['data'], 'post'=> $notification['post']])
+                @elseif($notification['type'] == 'like')
+                    @include('components.activity._liked_by', ['post' => $notification['data'], 'mostRecentLike' => $notification['like_user']])
+                @elseif($notification['type'] == 'follow')
+                    @include('components.activity._followed_by', ['follower' => $notification['data']])
                 @endif
             @endforeach
-            @foreach($posts as $post)
-                    @if($post->likedBy->count() > 0)
-                        @if($mostRecentLike = $post->likedBy->where('pivot.user_id', '!=', Auth::id())->first())
-                            @include("components.activity._liked_by")
-                      @endif
-                @endif
-            @endforeach
-            @if($followers->count() > 0)
-               @foreach($followers as $follower)
-                   @if($follower->id !== auth()->user()->id)
-                        @include("components.activity._followed_by", ['follower' => $follower])
-                   @endif
-                @endforeach
-            @endif
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        $userId = auth()->id(); // Haal de ID van de ingelogde gebruiker op
+        $userId = auth()->id();
 
         // Haal alle posts op met comments
         $postsWithComments = Post::whereHas('comments')->with(['user', 'comments.user'])->get();
@@ -20,17 +20,54 @@ class ActivityController extends Controller
         $postsWithLikes = Post::whereHas('likedBy', function ($query) use ($userId) {
             $query->where('user_id', '!=', $userId);
         })->with([
-            'user',
-            'likedBy' => function ($query) {
-                $query->orderBy('post_user_likes.created_at', 'desc');
+                    'user',
+                    'likedBy' => function ($query) {
+                        $query->orderBy('post_user_likes.created_at', 'desc');
+                    }
+                ])->get();
+
+        // Haal volgers op
+        $followers = auth()->user()->followers()->get();
+
+        // Combineer en sorteer de notificaties
+        $notifications = [];
+
+        foreach ($postsWithComments as $post) {
+            foreach ($post->comments as $comment) {
+                $notifications[] = [
+                    'post' => $post,
+                    'type' => 'comment',
+                    'data' => $comment,
+                    'timestamp' => $comment->created_at,
+                ];
             }
-        ])->get();
+        }
 
-        $followers = auth()->user()->followers; // Zorg dat de juiste relatie in het User model bestaat
+        foreach ($postsWithLikes as $post) {
+            $mostRecentLike = $post->likedBy->where('pivot.user_id', '!=', $userId)->first();
+            if ($mostRecentLike) {
+                $notifications[] = [
+                    'type' => 'like',
+                    'data' => $post,
+                    'like_user' => $mostRecentLike,
+                    'timestamp' => $mostRecentLike->pivot->created_at,
+                ];
+            }
+        }
 
-        // Combineer de twee verzamelingen
-        $posts = $postsWithComments->merge($postsWithLikes);
+        foreach ($followers as $follower) {
+            $notifications[] = [
+                'type' => 'follow',
+                'data' => $follower,
+                'timestamp' => $follower->updated_at,
+            ];
+        }
 
-        return view('activity.index', compact('posts', 'followers'));
+        // Sorteer de notificaties op timestamp
+        usort($notifications, function ($a, $b) {
+            return $b['timestamp'] <=> $a['timestamp'];
+        });
+
+        return view('activity.index', compact('notifications'));
     }
 }
