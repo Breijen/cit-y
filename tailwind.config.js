@@ -15,6 +15,7 @@ export default {
               selected: "#E2CFEA",
               icons: "#3A3E41",
               placeholder: "#60676C",
+              followed_by: "#9F2B68",
           },
           margin: {
               '3px': '3px',

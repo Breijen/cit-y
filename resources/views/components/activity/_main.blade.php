@@ -17,6 +17,13 @@
                       @endif
                 @endif
             @endforeach
+            @if($followers->count() > 0)
+               @foreach($followers as $follower)
+                   @if($follower->id !== auth()->user()->id)
+                        @include("components.activity._followed_by", ['follower' => $follower])
+                   @endif
+                @endforeach
+            @endif
         </div>
     </div>
 </div>
