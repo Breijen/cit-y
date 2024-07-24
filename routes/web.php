@@ -66,4 +66,4 @@ Route::post('/like/comments/{comment}', [LikeController::class, 'likeComment'])-
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 
-Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');
+Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware('auth');
