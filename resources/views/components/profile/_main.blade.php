@@ -1,6 +1,6 @@
-<div class="max-w-4xl mx-auto h-auto bg-content_bg rounded-lg mb-32 border border-divider relative">
+<div class="max-w-4xl mx-auto h-auto bg-content_bg rounded-3xl mb-32 border border-divider relative">
     <!-- Banner Image -->
-    <div class="w-full overflow-hidden rounded-t-lg bg-background" style="height: 150px;">
+    <div class="w-full overflow-hidden rounded-t-3xl bg-background" style="height: 150px;">
         <img src="{{ $user->banner ? asset('storage/' . $user->banner) : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=' }}" class="w-full object-cover" style="height: 150px;">
     </div>
     
@@ -68,7 +68,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="bg-content_bg w-full rounded-lg mt-40">
+    <div class="bg-content_bg w-full rounded-3xl mt-40">
         <div class="flex justify-around p-4 border-b border-divider">
             <button class="text-red-500 border-b-2 border-red-500" onclick="showTab('posts')">Posts</button>
             <button class="text-placeholder" onclick="showTab('replies')">Replies</button>

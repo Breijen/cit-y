@@ -5,7 +5,10 @@ import {
     Modal,
     Dropdown,
     Ripple,
+    Input,
     initTWE,
 } from "tw-elements";
 
-initTWE({ Modal, Dropdown, Ripple });
+initTWE({ Modal, Dropdown, Ripple, Input });
+
+Livewire.start()

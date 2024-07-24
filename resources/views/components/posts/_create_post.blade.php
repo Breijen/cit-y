@@ -1,4 +1,4 @@
-<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-lg border border-divider mb-4">
+<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider mb-4">
     <div class="flex items-center mb-2">
         <img src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3 border-2 border-divider">
         <div>
