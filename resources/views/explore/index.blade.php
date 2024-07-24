@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         @php
-            $pageName = 'Profile';
+            $pageName = 'Explore';
         @endphp
 
         <title>Cit-Y</title>
@@ -22,8 +22,8 @@
         <div class="flex">
         @include("components._sidebar")
 
-        <main class="flex-1 pt-4 rounded-3xl">
-        @include("components.profile._main")
+        <main class="flex-1 pt-4">
+            @include("components.search._main")
         </main>
         </div>
 

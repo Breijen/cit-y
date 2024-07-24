@@ -11,6 +11,8 @@ use App\Http\Controllers\FollowController;
 
 use App\Http\Controllers\ActivityController;
 
+use App\Http\Controllers\ExploreController;
+
 
 Route::get('/', [PostController::class, 'index']);
 
@@ -67,3 +69,5 @@ Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 
 Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware('auth');
+
+Route::get('/explore', [ExploreController::class, 'searchRecent'])->name('explore.search');
