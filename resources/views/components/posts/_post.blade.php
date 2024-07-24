@@ -1,5 +1,5 @@
 <div class="mt-4 p-2">
-    <div class="mb-6 cursor-pointer" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
+    <div class="mb-4 cursor-pointer" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
         <div class="flex items-center mb-4" >
             <img src="{{$post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
