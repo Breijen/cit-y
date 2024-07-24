@@ -1,4 +1,4 @@
-<aside class="hidden md:flex sm:fixed flex z-20 top-0 fixed h-full w-8 sm:w-20 flex-col space-y-14 items-center justify-center bg-background text-icons">
+<aside name="sidebar" class="hidden md:flex sm:fixed flex z-20 top-0 fixed h-full w-8 sm:w-20 flex-col space-y-14 items-center justify-center bg-background text-icons">
     <!-- For you -->
     <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>

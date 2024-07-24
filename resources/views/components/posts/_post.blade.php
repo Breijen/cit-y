@@ -53,9 +53,9 @@
         </div>
         <div>
         <p class="text-gray-300">{{$post['content']}}</p>
-    @if    ($post->image_one != null)
-        <img class="h-60 mt-4 border-2 border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
-    @endif    
+        @if($post->image_one != null)
+            <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
+        @endif    
         </div>
     </div>
 @auth    
