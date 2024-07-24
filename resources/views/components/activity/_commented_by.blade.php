@@ -1,5 +1,10 @@
 <div class="pb-4 p-2">
     <div class="pb-4 cursor-pointer" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
+        <div class="absolute pt-10 pl-6">
+            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="#212121" fill="#0096FF" stroke-width="1.5"/>
+            </svg>
+        </div>
         <div class="flex items-center mb-1" >
             <img src="{{$comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
             <div>
@@ -29,11 +34,11 @@
                     @endphp
                     </p>
                 </div>
-                <div class="text-placeholder text-md sm:text-xl">
+                <div class="text-placeholder text-md -mt-1">
                 {{$post["content"]}}
                 </div>
                 <div>
-                    <p class="pt-1 text-gray-300 text-md sm:text-xl">{{$comment['content']}}</p>
+                    <p class="text-gray-300 text-md pt-1">{{$comment['content']}}</p>
                 </div>
             </div>
         </div>
