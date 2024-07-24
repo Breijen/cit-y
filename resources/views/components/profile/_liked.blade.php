@@ -11,8 +11,3 @@
         @endif
     </div>
 </div>
-
-@auth
-    @include("components.posts._edit_post_modal")
-    @include("components.posts._delete_post_modal")
-@endauth
