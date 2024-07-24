@@ -23,7 +23,7 @@
                     <p class="pt-[2px] pl-[5px] text-sm text-placeholder">
                     @php
                         $now = new DateTime();
-                        $ago = new DateTime($comment->created_at);
+                        $ago = new DateTime($post->created_at);
                         $diff = $now->diff($ago);
 
                         if ($diff->y > 0) {

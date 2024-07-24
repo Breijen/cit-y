@@ -13,7 +13,7 @@
                     <p class="text-gray-400 pl-1 pt-[2px] text-placeholder text-sm">
                     @php
                         $now = new DateTime();
-                        $ago = new DateTime($follower->created_at);
+                        $ago = new DateTime($follower->updated_at);
                         $diff = $now->diff($ago);
 
                         if ($diff->y > 0) {
