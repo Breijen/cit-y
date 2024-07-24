@@ -1,4 +1,5 @@
 import './bootstrap';
+import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm'
 
 import {
     Modal,
@@ -9,7 +10,5 @@ import {
 } from "tw-elements";
 
 initTWE({ Modal, Dropdown, Ripple, Input });
-
-import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm'
 
 Livewire.start()
