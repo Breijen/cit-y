@@ -1,6 +1,6 @@
 <header class="top-0 z-50 h-24 w-full flex items-center sticky justify-between sm:px-10 px-3 bg-background">
     <!-- Naam van de website links -->
-    <div class="text-white text-4xl font-bold">
+    <div class="pl-2 text-white text-3xl md:text-4xl font-bold">
         Cit-Y
     </div>
 
