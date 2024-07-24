@@ -1,8 +1,8 @@
 <header class="top-0 z-50 h-24 w-full flex items-center sticky justify-between sm:px-10 px-3 bg-background">
     <!-- Naam van de website links -->
-    <div class="pl-2 text-white text-3xl md:text-4xl font-bold">
+    <a href="/" class="pl-2 text-white text-3xl md:text-4xl font-bold">
         Cit-Y
-    </div>
+    </a>
 
     <div class="absolute left-1/2 transform -translate-x-1/2 text-white md:inline hidden md:text-xl font-bold">
         {{ $pageName }}

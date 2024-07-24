@@ -13,6 +13,7 @@
 </div>
 
 @auth
+    @include("components.posts._create_comment_modal")
     @include("components.comments._edit_comment_modal")
     @include("components.comments._delete_comment_modal")
 @endauth
