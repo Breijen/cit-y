@@ -16,6 +16,8 @@ export default {
               icons: "#3A3E41",
               placeholder: "#60676C",
               followed_by: "#9F2B68",
+              liked_by: "#FF3131",
+              commented_by: "#0096FF",
           },
           margin: {
               '3px': '3px',
