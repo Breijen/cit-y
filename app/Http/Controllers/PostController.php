@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Quote;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -68,9 +69,28 @@ class PostController extends Controller
 
         $formFields['user_id'] = auth()->id();
 
-        Post::create($formFields);
+        $post = Post::create($formFields);
+
+        $content = $request->input('content');
+        $quote_id = $this->extractQuoteIdFromContent($content);
+
+        if ($quote_id) {
+            Quote::create([
+                'post_id' => $post->id,
+                'quote_id' => $quote_id,
+            ]);
+        }
 
         return back();
+    }
+
+    private function extractQuoteIdFromContent($content)
+    {
+        // Assuming the link format is /posts/{id}
+        if (preg_match('/\/posts\/(\d+)/', $content, $matches)) {
+            return $matches[1];
+        }
+        return null;
     }
 
     // Store a new comment
