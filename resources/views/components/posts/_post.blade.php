@@ -55,7 +55,23 @@
         <p class="text-gray-300">{{$post['content']}}</p>
         @if($post->image_one != null)
             <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
-        @endif    
+        @endif
+
+        @if($post->quote)
+            <div class="relative bg-content_bg p-3 rounded-lg mb-4 mt-4 border border-divider" onclick="event.stopPropagation(); location.href='/{{$post->quote->quotedPost->user->username}}/{{$post->quote->quotedPost->uuid}}'">
+                <div class="flex items-center mb-2">
+                    <img src="{{$post->quote->quotedPost->user->profile_picture ? asset('storage/' . $post->quote->quotedPost->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-8 h-8 mr-2">
+                    <div>
+                        <a href="/profile/{{$post->quote->quotedPost->user->username}}" class="text-white font-bold hover:underline lowercase">{{$post->quote->quotedPost->user->username}}</a>
+                        <div class="text-placeholder text-xs">quoted post</div>
+                    </div>
+                </div>
+                <p class="text-gray-300">{{$post->quote->quotedPost->content}}</p>
+                @if($post->quote->quotedPost->image_one != null)
+                    <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->quote->quotedPost->image_one) }}" >
+                @endif
+            </div>
+        @endif
         </div>
     </div>
 @auth    
@@ -80,11 +96,11 @@
 
         <!-- Reposts Icon and Count -->
         <div class="flex items-center space-x-2">
-            <svg width="24px" height="24px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+            <svg onclick="quotePost('{{$post->username}}', '{{$post->uuid}}')" width="24px" height="24px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer">
                 <path d="M12.9998 8L6 14L12.9998 21" stroke="#E2CFEA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M6 14H28.9938C35.8768 14 41.7221 19.6204 41.9904 26.5C42.2739 33.7696 36.2671 40 28.9938 40H11.9984" stroke="#E2CFEA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <p class="text-md mt-3px">{{$post['reposts']}}</p>
+            <p class="text-md mt-3px">{{ $post->quotedBy()->count() }}</p>
         </div>
 
         <!-- Shares Icon and Count -->
@@ -112,5 +128,24 @@
         event.stopPropagation();
 
         document.getElementById('createCommentForm').action = "/posts/" + id + "/comments";
+    }
+
+    function quotePost(username, uuid) {
+        quotedPostContainer.classList.add('hidden');
+        quoteIdInput.value = '';
+        postInput.value = '';
+        quoteSet = false;
+
+        const createPostInput = document.getElementById('postInput');
+        const link = `/${username}/${uuid}`;
+
+        // Fill the create post input with the link to the current post
+        createPostInput.value = link;
+
+        // Trigger the input event to handle displaying the quoted post
+        createPostInput.dispatchEvent(new Event('input'));
+
+        // Scroll back to the top of the webpage
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>

@@ -7,9 +7,21 @@
         </div>
     </div>
     <form method="post" action="/posts" enctype="multipart/form-data" class="-pt-8">
-        @csrf
+        @csrf    
+        <input type="hidden" name="quote_id" id="quote_id" value="" />
         <div class="mb-2">
             <input name="content" id="postInput" autocomplete="off" type="text" placeholder="What are you thinking about?" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow">
+        </div>
+        <div id="quotedPostContainer" class="relative hidden bg-content_bg p-3 rounded-lg mb-4 border border-divider">
+            <div class="flex items-center mb-4 w-full">
+                <img id="quotedPostProfilePicture" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
+                <div>
+                    <div class="text-white" id="quotedPostUsername"></div>
+                    <div class="text-placeholder text-xs">quoted post</div>
+                </div>
+            </div>
+            <div class="text-gray-300" id="quotedPostContent"></div>
+            <button type="button" id="removeQuotedPostButton" class="text-xs bg-content rounded-md border border-divider p-1 absolute top-0 right-0 mt-2 mr-2 text-white">Remove</button>
         </div>
         <div class="mb-4">
             <img id="imagePreview" src="#" alt="Image Preview" class="hidden w-auto max-h-96 rounded-lg border-2 border-divider">
@@ -38,6 +50,88 @@
     const postButton = document.getElementById('postButton');
     const imageInput = document.getElementById('image_one');
     const imagePreview = document.getElementById('imagePreview');
+    const quotedPostContainer = document.getElementById('quotedPostContainer');
+    const quotedPostUsername = document.getElementById('quotedPostUsername');
+    const quotedPostContent = document.getElementById('quotedPostContent');
+    const quotedPostImage = document.getElementById('quotedPostImage');
+    const quoteIdInput = document.getElementById('quote_id');
+    const removeQuotedPostButton = document.getElementById('removeQuotedPostButton');
+
+    let quoteSet = false;
+
+    function extractQuoteIdFromContent(content) {
+        const regex = /\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9_]+)/;
+        const match = content.match(regex);
+        if (match) {
+            return {
+                username: match[1],
+                postId: match[2]
+            };
+        }
+        return null;
+    }
+
+    async function fetchQuotedPostByUUID(uuid) {
+        try {
+            const response = await fetch(`/api/posts/uuid/${uuid}`);
+            if (response.ok) {
+                const post = await response.json();
+                return post;
+            }
+            return null;
+        } catch (error) {
+            console.error('Error fetching quoted post:', error);
+            return null;
+        }
+    }
+
+    async function displayQuotedPost() {
+        const content = postInput.value;
+        if (!quoteSet) {
+            const quoteDetails = extractQuoteIdFromContent(content);
+            if (quoteDetails) {
+                console.log(quoteDetails);
+                const quotedPost = await fetchQuotedPostByUUID(quoteDetails.postId);
+                if (quotedPost) {
+                    quotedPostUsername.textContent = `${quotedPost.user.username}`;
+                    quotedPostContent.textContent = quotedPost.content;
+                    quoteIdInput.value = quotedPost.id;
+
+                    if (quotedPost.user.profile_picture) {
+                        quotedPostProfilePicture.src = `/storage/${quotedPost.user.profile_picture}`;
+                    } else {
+                        quotedPostProfilePicture.src = 'https://eu.ui-avatars.com/api/?name=John+Doe&size=250';
+                    }
+
+                    quotedPostContainer.classList.remove('hidden');
+
+                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9_]+)/, '').trim();
+                    quoteSet = true;
+                } else {
+                    quotedPostContainer.classList.add('hidden');
+                    quoteIdInput.value = '';
+                    quoteSet = false;
+                }
+            } else {
+                quotedPostContainer.classList.add('hidden');
+                quoteIdInput.value = '';
+                quoteSet = false;
+            }
+        }
+    }
+
+    removeQuotedPostButton.addEventListener('click', () => {
+        quotedPostContainer.classList.add('hidden');
+        quoteIdInput.value = '';
+        postInput.value = '';
+        quoteSet = false;
+    });
+
+    // Add event listener to the input field
+    postInput.addEventListener('input', () => {
+        toggleButtonState();
+        displayQuotedPost();
+    });
 
     function toggleButtonState() {
         if (postInput.value.trim() === '') {
@@ -66,7 +160,4 @@
 
     // Check the input on page load
     toggleButtonState();
-
-    // Add event listener to the input field
-    postInput.addEventListener('input', toggleButtonState);
 </script>
