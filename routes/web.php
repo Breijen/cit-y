@@ -17,7 +17,7 @@ use App\Http\Controllers\ExploreController;
 Route::get('/', [PostController::class, 'index']);
 
 //Laat profiel zien
-Route::get('/profile/{username}', [UserController::class, 'show']);
+Route::get('/profile/{username}', [UserController::class, 'show'])->middleware('auth');
 
 //Laat een enkele post zien
 Route::get('/{username}/{uuid}', [PostController::class, 'show']);

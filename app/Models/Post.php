@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Comment;
+use App\Models\Quote;
 
 class Post extends Model
 {
@@ -26,6 +27,15 @@ class Post extends Model
     // Relatie tot gebruiker
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function quote(){
+        return $this->hasOne(Quote::class);
+    }
+
+    public function quotedBy()
+    {
+        return $this->hasMany(Quote::class, 'quote_id');
     }
 
     public function comments()
