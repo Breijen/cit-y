@@ -63,6 +63,7 @@
                     <img src="{{$post->quote->quotedPost->user->profile_picture ? asset('storage/' . $post->quote->quotedPost->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-8 h-8 mr-2">
                     <div>
                         <a href="/profile/{{$post->quote->quotedPost->user->username}}" class="text-white font-bold hover:underline lowercase">{{$post->quote->quotedPost->user->username}}</a>
+                        <div class="text-placeholder text-xs">quoted post</div>
                     </div>
                 </div>
                 <p class="text-gray-300">{{$post->quote->quotedPost->content}}</p>
