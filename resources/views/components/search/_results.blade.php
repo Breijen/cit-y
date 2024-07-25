@@ -8,7 +8,9 @@
                 @endforeach
             </ul>
         @else
-            <p>No users found</p>
+        <div class="flex justify-center items-center"> 
+            <p class="text-placeholder">No users found</p>
+        </div>
         @endif
     @else
         @if(isset($posts) && $posts->isEmpty())
