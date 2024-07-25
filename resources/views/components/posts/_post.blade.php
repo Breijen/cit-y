@@ -55,7 +55,19 @@
         <p class="text-gray-300">{{$post['content']}}</p>
         @if($post->image_one != null)
             <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
-        @endif    
+        @endif
+
+        @if($post->quote)
+            <div class="relative bg-content_bg p-3 rounded-lg mb-4 mt-4 border border-divider" onclick="event.stopPropagation(); location.href='/{{$post->quote->quotedPost->user->username}}/{{$post->quote->quotedPost->uuid}}'">
+                <div class="flex items-center mb-2">
+                    <img src="{{$post->quote->quotedPost->user->profile_picture ? asset('storage/' . $post->quote->quotedPost->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-8 h-8 mr-2">
+                    <div>
+                        <a href="/profile/{{$post->quote->quotedPost->user->username}}" class="text-white font-bold hover:underline lowercase">{{$post->quote->quotedPost->user->username}}</a>
+                    </div>
+                </div>
+                <p class="text-gray-300">{{$post->quote->quotedPost->content}}</p>
+            </div>
+        @endif
         </div>
     </div>
 @auth    
@@ -107,7 +119,6 @@
         document.getElementById('postDeleteForm').action = "/posts/" + id;
         document.getElementById('postEditInput').value = content;
     }
-
 
     async function passPost(id) {
         event.stopPropagation();

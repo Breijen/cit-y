@@ -112,7 +112,4 @@
             commentImagePreview.classList.add('hidden');
         }
     }
-
-    // Check the input on page load
-    toggleButtonState();
 </script>

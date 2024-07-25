@@ -37,6 +37,12 @@ class PostController extends Controller
         return view('posts.show', compact('post', 'comments'));
     }
 
+    public function showQuote($id) {
+        $post = Post::with(['user', 'quote.quotedPost.user'])->findOrFail($id);
+
+        return view('posts.quote', compact('post'));
+    }
+
     public function store(Request $request)
     {
         //Content dat gevuld kan worden
