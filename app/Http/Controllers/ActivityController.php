@@ -12,25 +12,31 @@ class ActivityController extends Controller
     public function index()
     {
         $userId = auth()->id();
+      
+        // Haal alle posts op met comments
+        $postsWithComments = Post::whereHas('comments', function ($query) use ($userId) {
+            $query->where('user_id', '!=', $userId);
+        })->with([
+                    'user',
+                    'comments' => function ($query) use ($userId) {
+                        $query->where('user_id', '!=', $userId);
+                    },
+                    'comments.user'
+                ])->get();
 
-        // Haal alle posts van de ingelogde gebruiker op met comments
-        $postsWithComments = Post::where('user_id', $userId)
-            ->whereHas('comments')
-            ->with(['user', 'comments.user'])
-            ->get();
+        // Haal alle posts op met likes, exclusief de likes van de ingelogde gebruiker
+        $postsWithLikes = Post::whereHas('likedBy', function ($query) use ($userId) {
+            $query->where('user_id', '!=', $userId);
+        })->with([
+                    'user',
+                    'likedBy' => function ($query) use ($userId) {
+                        $query->where('user_id', '!=', $userId)->orderBy('post_user_likes.created_at', 'desc');
+                    }
+                ])->get();
 
-        // Haal alle posts van de ingelogde gebruiker op met likes
-        $postsWithLikes = Post::where('user_id', $userId)
-            ->whereHas('likedBy')
-            ->with([
-                'user',
-                'likedBy' => function ($query) {
-                    $query->orderBy('post_user_likes.created_at', 'desc');
-                }
-            ])->get();
 
-        // Haal volgers op
-        $followers = auth()->user()->followers()->get();
+        // Haal volgers op, exclusief de ingelogde gebruiker zelf
+        $followers = auth()->user()->followers()->where('follower_id', '!=', $userId)->get();
 
         // Combineer en sorteer de notificaties
         $notifications = [];
