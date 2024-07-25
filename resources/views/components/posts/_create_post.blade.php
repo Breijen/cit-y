@@ -60,7 +60,7 @@
     let quoteSet = false;
 
     function extractQuoteIdFromContent(content) {
-        const regex = /\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9_]+)/;
+        const regex = /\/([^/]+)\/([a-zA-Z0-9_]+)/;
         const match = content.match(regex);
         if (match) {
             return {
@@ -105,7 +105,7 @@
 
                     quotedPostContainer.classList.remove('hidden');
 
-                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9_]+)/, '').trim();
+                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
                     quoteSet = true;
                 } else {
                     quotedPostContainer.classList.add('hidden');
