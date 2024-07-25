@@ -12,7 +12,7 @@ class ActivityController extends Controller
     public function index()
     {
         $userId = auth()->id();
-
+      
         // Haal alle posts op met comments
         $postsWithComments = Post::whereHas('comments', function ($query) use ($userId) {
             $query->where('user_id', '!=', $userId);
@@ -34,6 +34,7 @@ class ActivityController extends Controller
                     }
                 ])->get();
 
+
         // Haal volgers op, exclusief de ingelogde gebruiker zelf
         $followers = auth()->user()->followers()->where('follower_id', '!=', $userId)->get();
 
@@ -52,13 +53,12 @@ class ActivityController extends Controller
         }
 
         foreach ($postsWithLikes as $post) {
-            $mostRecentLike = $post->likedBy->where('pivot.user_id', '!=', $userId)->first();
-            if ($mostRecentLike) {
+            foreach ($post->likedBy as $like) {
                 $notifications[] = [
                     'type' => 'like',
                     'data' => $post,
-                    'like_user' => $mostRecentLike,
-                    'timestamp' => $mostRecentLike->pivot->created_at,
+                    'like_user' => $like,
+                    'timestamp' => $like->pivot->created_at,
                 ];
             }
         }
@@ -67,7 +67,7 @@ class ActivityController extends Controller
             $notifications[] = [
                 'type' => 'follow',
                 'data' => $follower,
-                'timestamp' => $follower->updated_at,
+                'timestamp' => $follower->pivot->created_at,
             ];
         }
 
