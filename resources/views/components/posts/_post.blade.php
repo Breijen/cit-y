@@ -108,6 +108,7 @@
         document.getElementById('postEditInput').value = content;
     }
 
+
     async function passPost(id) {
         event.stopPropagation();
 

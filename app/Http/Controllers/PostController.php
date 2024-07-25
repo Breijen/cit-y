@@ -43,7 +43,8 @@ class PostController extends Controller
 
         $validatedData = $request->validate([
             'content' => 'required|string',
-            'image_one' => 'nullable|image', // Add image validation
+            'image_one' => 'nullable|image', 
+            'quote_id' => 'nullable|exists:posts,id' 
         ]);
 
         // Standaard variabelen
@@ -71,26 +72,15 @@ class PostController extends Controller
 
         $post = Post::create($formFields);
 
-        $content = $request->input('content');
-        $quote_id = $this->extractQuoteIdFromContent($content);
-
-        if ($quote_id) {
+        // Handle the quote_id if present
+        if (!empty($validatedData['quote_id'])) {
             Quote::create([
                 'post_id' => $post->id,
-                'quote_id' => $quote_id,
+                'quote_id' => $validatedData['quote_id'],
             ]);
         }
 
         return back();
-    }
-
-    private function extractQuoteIdFromContent($content)
-    {
-        // Assuming the link format is /posts/{id}
-        if (preg_match('/\/posts\/(\d+)/', $content, $matches)) {
-            return $matches[1];
-        }
-        return null;
     }
 
     // Store a new comment

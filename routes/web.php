@@ -13,6 +13,8 @@ use App\Http\Controllers\ActivityController;
 
 use App\Http\Controllers\ExploreController;
 
+use App\Models\Post;
+
 
 Route::get('/', [PostController::class, 'index']);
 
@@ -21,6 +23,19 @@ Route::get('/profile/{username}', [UserController::class, 'show'])->middleware('
 
 //Laat een enkele post zien
 Route::get('/{username}/{uuid}', [PostController::class, 'show']);
+
+//Laat quote zien
+Route::get('/api/posts/uuid/{uuid}', function ($uuid) {
+    $post = Post::where('uuid', $uuid)->with('user')->firstOrFail();
+    return [
+        'id' => $post->id,
+        'content' => $post->content,
+        'user' => [
+            'username' => $post->user->username,
+        ],
+        'image_one' => $post->image_one, 
+    ];
+});
 
 //Verzend een post
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth');
