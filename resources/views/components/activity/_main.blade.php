@@ -1,4 +1,4 @@
-<div class="min-h-screen">
+<div class="min-h-screen pb-20">
     <div class="space-y-2 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider">
         <div class="posts">
             @foreach($notifications as $notification)
@@ -10,6 +10,9 @@
                     @include('components.activity._followed_by', ['follower' => $notification['data']])
                 @endif
             @endforeach
+            <div class="flex justify-center items-center">
+                <p class="text-placeholder">End of your notifications. Interact some more!</p>
+            </div>
         </div>
     </div>
 </div>

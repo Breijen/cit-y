@@ -13,18 +13,21 @@ class ActivityController extends Controller
     {
         $userId = auth()->id();
 
-        // Haal alle posts op met comments
-        $postsWithComments = Post::whereHas('comments')->with(['user', 'comments.user'])->get();
+        // Haal alle posts van de ingelogde gebruiker op met comments
+        $postsWithComments = Post::where('user_id', $userId)
+            ->whereHas('comments')
+            ->with(['user', 'comments.user'])
+            ->get();
 
-        // Haal alle posts op met likes, exclusief de likes van de ingelogde gebruiker
-        $postsWithLikes = Post::whereHas('likedBy', function ($query) use ($userId) {
-            $query->where('user_id', '!=', $userId);
-        })->with([
-                    'user',
-                    'likedBy' => function ($query) {
-                        $query->orderBy('post_user_likes.created_at', 'desc');
-                    }
-                ])->get();
+        // Haal alle posts van de ingelogde gebruiker op met likes
+        $postsWithLikes = Post::where('user_id', $userId)
+            ->whereHas('likedBy')
+            ->with([
+                'user',
+                'likedBy' => function ($query) {
+                    $query->orderBy('post_user_likes.created_at', 'desc');
+                }
+            ])->get();
 
         // Haal volgers op
         $followers = auth()->user()->followers()->get();
@@ -44,13 +47,12 @@ class ActivityController extends Controller
         }
 
         foreach ($postsWithLikes as $post) {
-            $mostRecentLike = $post->likedBy->where('pivot.user_id', '!=', $userId)->first();
-            if ($mostRecentLike) {
+            foreach ($post->likedBy as $like) {
                 $notifications[] = [
                     'type' => 'like',
                     'data' => $post,
-                    'like_user' => $mostRecentLike,
-                    'timestamp' => $mostRecentLike->pivot->created_at,
+                    'like_user' => $like,
+                    'timestamp' => $like->pivot->created_at,
                 ];
             }
         }
@@ -59,7 +61,7 @@ class ActivityController extends Controller
             $notifications[] = [
                 'type' => 'follow',
                 'data' => $follower,
-                'timestamp' => $follower->updated_at,
+                'timestamp' => $follower->pivot->created_at,
             ];
         }
 

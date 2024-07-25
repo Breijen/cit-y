@@ -4,6 +4,11 @@
             @foreach($user->posts->sortByDesc('created_at') as $post)
                 @include("components.posts._post")
             @endforeach
+            @auth
+            @include("components.posts._create_comment_modal")
+                @include("components.comments._edit_comment_modal")
+                @include("components.comments._delete_comment_modal")
+@endauth        
         @else
             <div class="text-placeholder flex items-center justify-center w-full ">
                 <p>No posts made yet!</p>
@@ -12,8 +17,3 @@
     </div>
 </div>
 
-@auth
-    @include("components.posts._create_comment_modal")
-    @include("components.comments._edit_comment_modal")
-    @include("components.comments._delete_comment_modal")
-@endauth
