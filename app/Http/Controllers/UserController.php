@@ -27,7 +27,8 @@ class UserController extends Controller
             // other validation rules
         ]);
 
-        // Has Password
+        // Convert username to lowercase
+        $formFields['username'] = strtolower($formFields['username']);
 
         $formFields['password'] = bcrypt($formFields['password']);
         $formFields['bio'] = null;
