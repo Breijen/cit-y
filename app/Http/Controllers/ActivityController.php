@@ -13,16 +13,14 @@ class ActivityController extends Controller
     {
         $userId = auth()->id();
       
-        // Haal alle posts op met comments
-        $postsWithComments = Post::whereHas('comments', function ($query) use ($userId) {
-            $query->where('user_id', '!=', $userId);
-        })->with([
-                    'user',
-                    'comments' => function ($query) use ($userId) {
-                        $query->where('user_id', '!=', $userId);
-                    },
-                    'comments.user'
-                ])->get();
+        $postsWithComments = Post::where('user_id', $userId)
+            ->with([
+                'comments' => function ($query) use ($userId) {
+                    $query->where('user_id', '!=', $userId);
+                },
+                'comments.user'
+            ])
+            ->get();
 
         // Haal alle posts op met likes, exclusief de likes van de ingelogde gebruiker
         $postsWithLikes = Post::whereHas('likedBy', function ($query) use ($userId) {
