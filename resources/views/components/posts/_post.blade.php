@@ -52,7 +52,7 @@
         @endauth            
         </div>
         <div>
-        <p class="text-gray-300">{{$post['content']}}</p>
+        <p id="postContent" class="text-gray-300">{{$post['content']}}</p>
         @if($post->image_one != null)
             <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
         @endif
@@ -139,13 +139,19 @@
         const createPostInput = document.getElementById('postInput');
         const link = `/${username}/${uuid}`;
 
-        // Fill the create post input with the link to the current post
         createPostInput.value = link;
 
-        // Trigger the input event to handle displaying the quoted post
         createPostInput.dispatchEvent(new Event('input'));
 
-        // Scroll back to the top of the webpage
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    function convertMentionsToLinks(content) {
+        return content.replace(/@(\w+)/g, '<a href="/profile/$1" class="text-blue-500 hover:underline">@$1</a>');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const postContentElement = document.getElementById('postContent');
+        postContentElement.innerHTML = convertMentionsToLinks(postContentElement.innerHTML);
+    });
 </script>
