@@ -147,7 +147,7 @@
     }
 
     function convertMentionsToLinks(content) {
-        return content.replace(/@(\w+)/g, '<a href="/profile/$1" class="text-blue-500 hover:underline">@$1</a>');
+        return content.replace(/@(\w.+)/g, '<a href="/profile/$1" class="text-blue-500 hover:underline">@$1</a>');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
