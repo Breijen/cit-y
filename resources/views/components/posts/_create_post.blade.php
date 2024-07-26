@@ -55,6 +55,7 @@
     const quotedPostContent = document.getElementById('quotedPostContent');
     const quotedPostImage = document.getElementById('quotedPostImage');
     const quoteIdInput = document.getElementById('quote_id');
+    const quotedPostProfilePicture = document.getElementById('quotedPostProfilePicture');
     const removeQuotedPostButton = document.getElementById('removeQuotedPostButton');
 
     let quoteSet = false;
@@ -90,16 +91,22 @@
         if (!quoteSet) {
             const quoteDetails = extractQuoteIdFromContent(content);
             if (quoteDetails) {
-                console.log(quoteDetails);
+
+                // console.log('Quote details:', quoteDetails);
+
                 const quotedPost = await fetchQuotedPostByUUID(quoteDetails.postId);
+
                 if (quotedPost) {
+                    // console.log('Quoted post:', quotedPost);
                     quotedPostUsername.textContent = `${quotedPost.user.username}`;
                     quotedPostContent.textContent = quotedPost.content;
                     quoteIdInput.value = quotedPost.id;
 
                     if (quotedPost.user.profile_picture) {
+                        // console.log('Profile picture URL:', quotedPost.user.profile_picture);
                         quotedPostProfilePicture.src = `/storage/${quotedPost.user.profile_picture}`;
                     } else {
+                        // console.log('Profile picture not found, using default');
                         quotedPostProfilePicture.src = 'https://eu.ui-avatars.com/api/?name=John+Doe&size=250';
                     }
 
@@ -108,11 +115,13 @@
                     postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
                     quoteSet = true;
                 } else {
+                    // console.log('Quoted post not found');
                     quotedPostContainer.classList.add('hidden');
                     quoteIdInput.value = '';
                     quoteSet = false;
                 }
             } else {
+                // console.log('No quote details found');
                 quotedPostContainer.classList.add('hidden');
                 quoteIdInput.value = '';
                 quoteSet = false;
