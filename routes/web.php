@@ -32,8 +32,10 @@ Route::get('/api/posts/uuid/{uuid}', function ($uuid) {
         'content' => $post->content,
         'user' => [
             'username' => $post->user->username,
+            'profile_picture' => $post->user->profile_picture
         ],
-        'image_one' => $post->image_one, 
+        'image_one' => $post->image_one,
+        'created_at' => $post->created_at,
     ];
 });
 
