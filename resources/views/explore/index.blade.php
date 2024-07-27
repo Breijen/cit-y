@@ -21,6 +21,7 @@
 
         <div class="flex">
             @include("components._sidebar")
+            @include("components.alerts._shared")
 
             @auth
                 @include("components._create_post")
