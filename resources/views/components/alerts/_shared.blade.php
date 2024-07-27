@@ -1,4 +1,4 @@
-<div id="copiedAlert" class="fixed inset-x-0 bottom-4 flex justify-center items-center hidden">
+<div id="copiedAlert" class="fixed inset-x-0 bottom-16 sm:bottom-4 flex justify-center items-center hidden">
     <div class="z-60 p-4 text-sm border border-icons text-white rounded-lg bg-background" role="alert">
         <span class="font-medium">Link copied!</span>
     </div>

@@ -14,12 +14,13 @@
         <title>Cit-Y</title>
 
         @vite('resources/css/app.css')
-
+            
     </head>
     <body class="bg-background">
         @include("components._header")
 
         @auth
+            @include("components.alerts._shared")
             @include("components._create_post")
             @include("components.posts._create_post_modal")
         @endauth   
