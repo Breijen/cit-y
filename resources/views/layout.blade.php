@@ -20,7 +20,8 @@
         <div class="flex">
         @include("components._sidebar")
 
-            <main class="flex-1"> 
+            <main class="flex-1">
+                @include("components.alerts._shared")
                 @yield('content')
             </main>
         </div>
