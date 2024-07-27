@@ -30,8 +30,18 @@ class ActivityController extends Controller
                     'likedBy' => function ($query) use ($userId) {
                         $query->where('user_id', '!=', $userId)->orderBy('post_user_likes.created_at', 'desc');
                     }
-                ])->get();
+                ])
+                ->get();
 
+        // Retrieve posts quoted by others
+        $quotedPosts = Post::where('user_id', $userId)
+            ->with([
+                'quotedBy' => function ($query) use ($userId) {
+                    $query->where('id', '!=', $userId);
+                },
+                'quote.user'
+            ])
+            ->get();
 
         // Haal volgers op, exclusief de ingelogde gebruiker zelf
         $followers = auth()->user()->followers()->where('follower_id', '!=', $userId)->get();
@@ -57,6 +67,18 @@ class ActivityController extends Controller
                     'data' => $post,
                     'like_user' => $like,
                     'timestamp' => $like->pivot->created_at,
+                ];
+            }
+        }
+
+        // Add quotes notifications
+        foreach ($quotedPosts as $post) {
+            foreach ($post->quotedBy as $quote) {
+                $notifications[] = [
+                    'type' => 'quote',
+                    'post' => $post,
+                    'data' => $quote,
+                    'timestamp' => $quote->created_at,
                 ];
             }
         }

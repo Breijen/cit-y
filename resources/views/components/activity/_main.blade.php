@@ -8,6 +8,8 @@
                     @include('components.activity._liked_by', ['post' => $notification['data'], 'mostRecentLike' => $notification['like_user']])
                 @elseif($notification['type'] == 'follow')
                     @include('components.activity._followed_by', ['follower' => $notification['data']])
+                @elseif($notification['type'] == 'quote')
+                    @include('components.activity._quoted_by', ['quote' => $notification['data'], 'post' => $notification['post']])
                 @endif
             @endforeach
             <div class="flex justify-center items-center">

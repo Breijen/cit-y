@@ -18,6 +18,7 @@ export default {
               followed_by: "#9F2B68",
               liked_by: "#FF3131",
               commented_by: "#0096FF",
+              quoted_by: "#FFA500",
           },
           margin: {
               '3px': '3px',
