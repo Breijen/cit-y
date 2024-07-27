@@ -20,7 +20,12 @@
         @include("components._header")
 
         <div class="flex">
-        @include("components._sidebar")
+            @include("components._sidebar")
+
+            @auth
+                @include("components._create_post")
+                @include("components.posts._create_post_modal")
+            @endauth   
 
         <main class="flex-1 pt-4">
             @include("components.search._main")

@@ -1,4 +1,4 @@
-<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider mb-4">
+<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg  mb-4 relative">
     <div class="flex items-center mb-2">
         <img src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3 border-2 border-divider">
         <div>
@@ -10,8 +10,7 @@
         @csrf    
         <input type="hidden" name="quote_id" id="quote_id" value="" />
         <div class="mb-2">
-            <div contenteditable="true" id="postInput" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow" placeholder="What are you thinking about?"></div>
-            <input type="hidden" name="content" id="contentInput">
+            <input placeholder="What are you thinking about?" name="content" id="postInput" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow" placeholder="What are you thinking about?">
         </div>
         <div id="quotedPostContainer" class="relative hidden bg-content_bg p-3 rounded-lg mb-4 border border-divider">
             <div class="flex items-center mb-4 w-full">
@@ -60,12 +59,6 @@
     </form>
 </div>
 
-<style>
-    .mention-blue {
-        color: #1DA1F2;
-    }
-</style>
-
 <script type="text/javascript">
     const postInput = document.getElementById('postInput');
     const postButton = document.getElementById('postButton');
@@ -78,7 +71,6 @@
     const quoteIdInput = document.getElementById('quote_id');
     const quotedPostProfilePicture = document.getElementById('quotedPostProfilePicture');
     const removeQuotedPostButton = document.getElementById('removeQuotedPostButton');
-    const contentInput = document.getElementById('contentInput');
 
     let quoteSet = false;
 
@@ -109,7 +101,8 @@
     }
 
     async function displayQuotedPost() {
-        const content = postInput.textContent;
+        const content = postInput.value;
+
         if (!quoteSet) {
             const quoteDetails = extractQuoteIdFromContent(content);
             if (quoteDetails) {
@@ -134,7 +127,7 @@
 
                     quotedPostContainer.classList.remove('hidden');
 
-                    postInput.textContent = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
+                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
                     quoteSet = true;
                 } else {
                     // console.log('Quoted post not found');
@@ -162,32 +155,16 @@
     postInput.addEventListener('input', () => {
         toggleButtonState();
         displayQuotedPost();
-        highlightMentions();
-        contentInput.value = postInput.innerHTML; // Ensure form submission contains the formatted content
     });
 
     function toggleButtonState() {
-        if (postInput.textContent.trim() === '') {
+        if (postInput.value.trim() === '') {
             postButton.classList.remove('cursor-pointer', 'text-white');
             postButton.classList.add('cursor-default', 'text-divider');
         } else {
             postButton.classList.remove('cursor-default', 'text-divider');
             postButton.classList.add('cursor-pointer', 'text-white');
         }
-    }
-
-    function highlightMentions() {
-        let htmlContent = postInput.innerHTML;
-        htmlContent = htmlContent.replace(/@([\w.-]+)/g, '<span class="mention-blue">@$1</span>');
-        postInput.innerHTML = htmlContent;
-
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.selectNodeContents(postInput);
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        postInput.focus();
     }
 
     function previewImage(event) {

@@ -19,8 +19,15 @@
     <body class="bg-background">
         @include("components._header")
 
+        @auth
+            @include("components._create_post")
+            @include("components.posts._create_post_modal")
+        @endauth   
+
         <div class="flex">
         @include("components._sidebar")
+
+
 
         <main class="flex-1 pt-4 rounded-3xl">
         @include("components.profile._main")

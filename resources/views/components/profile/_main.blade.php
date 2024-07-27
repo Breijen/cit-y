@@ -72,27 +72,17 @@
         <div class="flex justify-around p-4 border-b border-divider">
             <button class="text-red-500 border-b-2 border-red-500" onclick="showTab('posts')">Posts</button>
             <button class="text-placeholder" onclick="showTab('replies')">Replies</button>
-            <button class="text-placeholder" onclick="showTab('highlights')">Highlights</button>
             <button class="text-placeholder" onclick="showTab('media')">Media</button>
             <button class="text-placeholder" onclick="showTab('likes')">Likes</button>
         </div>
 
         <!-- Tab Contents -->
         <div id="posts" class="tab-content p-4">
-            @auth
-            @if(auth()->user()->username === $user->username)
-            @include("components.posts._create_post")
-            @endif
-            @endauth
             @include("components.profile._posts")
         </div>
 
         <div id="replies" class="tab-content hidden p-4">
             @include("components.profile._comments")
-        </div>
-
-        <div id="highlights" class="flex tab-content hidden justify-center items-center">
-            <p class="text-placeholder p-4">Functionaliteit werkt nog niet.</p>
         </div>
 
         <div id="media" class="flex tab-content hidden justify-center items-center">
