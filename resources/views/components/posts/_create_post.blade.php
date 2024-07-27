@@ -107,7 +107,7 @@
     }
 
     async function displayQuotedPost() {
-        const content = postInput.textContent;
+        const content = postInput.value;
         if (!quoteSet) {
             const quoteDetails = extractQuoteIdFromContent(content);
             if (quoteDetails) {
