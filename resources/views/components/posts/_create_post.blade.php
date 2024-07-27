@@ -10,8 +10,7 @@
         @csrf    
         <input type="hidden" name="quote_id" id="quote_id" value="" />
         <div class="mb-2">
-            <div contenteditable="true" id="postInput" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow" placeholder="What are you thinking about?"></div>
-            <input type="hidden" name="content" id="contentInput">
+            <input placeholder="What are you thinking about?" name="content" id="postInput" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow" placeholder="What are you thinking about?">
         </div>
         <div id="quotedPostContainer" class="relative hidden bg-content_bg p-3 rounded-lg mb-4 border border-divider">
             <div class="flex items-center mb-4 w-full">
@@ -78,7 +77,6 @@
     const quoteIdInput = document.getElementById('quote_id');
     const quotedPostProfilePicture = document.getElementById('quotedPostProfilePicture');
     const removeQuotedPostButton = document.getElementById('removeQuotedPostButton');
-    const contentInput = document.getElementById('contentInput');
 
     let quoteSet = false;
 
@@ -162,8 +160,6 @@
     postInput.addEventListener('input', () => {
         toggleButtonState();
         displayQuotedPost();
-        highlightMentions();
-        contentInput.value = postInput.innerHTML; // Ensure form submission contains the formatted content
     });
 
     function toggleButtonState() {
@@ -174,20 +170,6 @@
             postButton.classList.remove('cursor-default', 'text-divider');
             postButton.classList.add('cursor-pointer', 'text-white');
         }
-    }
-
-    function highlightMentions() {
-        let htmlContent = postInput.innerHTML;
-        htmlContent = htmlContent.replace(/@([\w.-]+)/g, '<span class="mention-blue">@$1</span>');
-        postInput.innerHTML = htmlContent;
-
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.selectNodeContents(postInput);
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        postInput.focus();
     }
 
     function previewImage(event) {
