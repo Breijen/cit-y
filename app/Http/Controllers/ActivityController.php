@@ -34,14 +34,7 @@ class ActivityController extends Controller
                 ->get();
 
         // Retrieve posts quoted by others
-        $quotedPosts = Post::where('user_id', $userId)
-            ->with([
-                'quotedBy' => function ($query) use ($userId) {
-                    $query->where('id', '!=', $userId);
-                },
-                'quote.user'
-            ])
-            ->get();
+        $quotedPosts = Post::where('user_id', $userId)->get();
 
         // Haal volgers op, exclusief de ingelogde gebruiker zelf
         $followers = auth()->user()->followers()->where('follower_id', '!=', $userId)->get();
@@ -77,6 +70,7 @@ class ActivityController extends Controller
                 $notifications[] = [
                     'type' => 'quote',
                     'post' => $post,
+                    'user' => $post->user,
                     'data' => $quote,
                     'timestamp' => $quote->created_at,
                 ];
