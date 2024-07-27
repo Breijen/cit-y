@@ -16,7 +16,7 @@
     @if(auth()->user()->username === $user->username)
     <div class="absolute top-0 right-0 m-4 space-x-1">
         <button class="hidden sm:inline p-2 border border-icons bg-divider text-sm text-white font-medium rounded-md"
-            onclick="passProfileContent('{{ $user->bio }}', '{{ $user->website }}')"
+            onclick="passProfileContent('{{ $user->firstname }}', '{{ $user->lastname }}', '{{ $user->bio }}', '{{ $user->website }}')"
             data-twe-toggle="modal"
             data-twe-target="#editProfileModal"
             data-twe-ripple-init
@@ -111,7 +111,9 @@
 
 <script type="text/javascript">
 
-    function passProfileContent(userBio, userWebsite) {
+    function passProfileContent(userFirstname, userLastname, userBio, userWebsite) {
+        document.getElementById('firstname').value = userFirstname;
+        document.getElementById('lastname').value = userLastname;
         document.getElementById('bio').value = userBio;
         document.getElementById('website').value = userWebsite;
     }

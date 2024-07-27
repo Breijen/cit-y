@@ -47,8 +47,8 @@
                     <label for="banner" class="flex flex-col items-center justify-center w-full h-48 cursor-pointer bg-background">
                         <img id="bannerPreview" class="w-full h-full object-cover" src="{{ $user->banner ? asset('storage/' . $user->banner) : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=' }}" alt="Banner Preview">
                         @if( $user->banner == null)
-                        <p class="fixed -mt-4 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload banner</span></p>
-                        <p class="fixed mt-8 text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (RECOMMENDED. 1500x400px)</p>
+                        <p class="flex -mt-48 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload banner</span></p>
+                        <p class="flex mt-2 text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (RECOMMENDED. 1500x400px)</p>
                         @endif
                         <input id="banner" name="banner" type="file" class="hidden" accept="image/*"/>
                     </label>
@@ -58,6 +58,10 @@
                         <img id="profilePicturePreview" class="w-32 h-32 rounded-full" src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" alt="Profile Picture Preview">
                         <input id="profile_picture" name="profile_picture" type="file" class="hidden" accept="image/*" />
                     </label>
+                </div>
+                <div class="flex items-center border border-divider mt-8 space-x-1 p-2 m-2 rounded">
+                    <input name="firstname" id="firstname" placeholder="First Name" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none" />
+                    <input name="lastname" id="lastname" placeholder="Last Name" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none" />
                 </div>
                 <div class="flex items-center border border-divider mt-8 p-2 m-2 rounded">
                     <textarea name="bio" id="bio" placeholder="Bio" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none"></textarea>
