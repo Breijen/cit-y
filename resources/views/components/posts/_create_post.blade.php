@@ -10,7 +10,8 @@
         @csrf    
         <input type="hidden" name="quote_id" id="quote_id" value="" />
         <div class="mb-2">
-            <input name="content" id="postInput" autocomplete="off" type="text" placeholder="What are you thinking about?" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow">
+            <div contenteditable="true" id="postInput" class="w-full bg-content_bg text-white placeholder-placeholder pl-2 rounded-lg focus:outline-none grow" placeholder="What are you thinking about?"></div>
+            <input type="hidden" name="content" id="contentInput">
         </div>
         <div id="quotedPostContainer" class="relative hidden bg-content_bg p-3 rounded-lg mb-4 border border-divider">
             <div class="flex items-center mb-4 w-full">
@@ -59,6 +60,12 @@
     </form>
 </div>
 
+<style>
+    .mention-blue {
+        color: #1DA1F2;
+    }
+</style>
+
 <script type="text/javascript">
     const postInput = document.getElementById('postInput');
     const postButton = document.getElementById('postButton');
@@ -71,6 +78,7 @@
     const quoteIdInput = document.getElementById('quote_id');
     const quotedPostProfilePicture = document.getElementById('quotedPostProfilePicture');
     const removeQuotedPostButton = document.getElementById('removeQuotedPostButton');
+    const contentInput = document.getElementById('contentInput');
 
     let quoteSet = false;
 
@@ -101,7 +109,7 @@
     }
 
     async function displayQuotedPost() {
-        const content = postInput.value;
+        const content = postInput.textContent;
         if (!quoteSet) {
             const quoteDetails = extractQuoteIdFromContent(content);
             if (quoteDetails) {
@@ -126,7 +134,7 @@
 
                     quotedPostContainer.classList.remove('hidden');
 
-                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
+                    postInput.textContent = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
                     quoteSet = true;
                 } else {
                     // console.log('Quoted post not found');
@@ -146,7 +154,7 @@
     removeQuotedPostButton.addEventListener('click', () => {
         quotedPostContainer.classList.add('hidden');
         quoteIdInput.value = '';
-        postInput.value = '';
+        postInput.textContent = '';
         quoteSet = false;
     });
 
@@ -154,16 +162,32 @@
     postInput.addEventListener('input', () => {
         toggleButtonState();
         displayQuotedPost();
+        highlightMentions();
+        contentInput.value = postInput.innerHTML; // Ensure form submission contains the formatted content
     });
 
     function toggleButtonState() {
-        if (postInput.value.trim() === '') {
+        if (postInput.textContent.trim() === '') {
             postButton.classList.remove('cursor-pointer', 'text-white');
             postButton.classList.add('cursor-default', 'text-divider');
         } else {
             postButton.classList.remove('cursor-default', 'text-divider');
             postButton.classList.add('cursor-pointer', 'text-white');
         }
+    }
+
+    function highlightMentions() {
+        let htmlContent = postInput.innerHTML;
+        htmlContent = htmlContent.replace(/@([\w.-]+)/g, '<span class="mention-blue">@$1</span>');
+        postInput.innerHTML = htmlContent;
+
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(postInput);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        postInput.focus();
     }
 
     function previewImage(event) {
@@ -181,6 +205,5 @@
         }
     }
 
-    // Check the input on page load
     toggleButtonState();
 </script>

@@ -100,6 +100,8 @@ class UserController extends Controller
 
         // Validate the incoming request data
         $formData = $request->validate([
+            'firstname' => 'required|min:3',
+            'lastname' => 'required|min:3',
             'bio' => 'nullable|string',
             'website' => 'nullable|string|url',
         ]);

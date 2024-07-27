@@ -1,4 +1,4 @@
-<div class="mt-4 p-2">
+<div id="post-{{$post['id']}} class="mt-4 p-2">
     <div class="mb-4 cursor-pointer" onclick="location.href='/{{$post['username']}}/{{$post['uuid']}}'">
         <div class="flex items-center mb-4" >
             <img src="{{$post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3">
@@ -52,7 +52,7 @@
         @endauth            
         </div>
         <div>
-        <p id="postContent" class="text-gray-300">{{$post['content']}}</p>
+        <p id="postContent-{{$post['id']}}" class="text-gray-300">{{$post['content']}}</p>
         @if($post->image_one != null)
             <img class="h-60 mt-4 border-2 rounded rounded-lg border-divider" src="{{ asset('storage/' . $post->image_one) }}" >
         @endif
@@ -147,11 +147,11 @@
     }
 
     function convertMentionsToLinks(content) {
-        return content.replace(/@(\w+)/g, '<a href="/profile/$1" class="text-blue-500 hover:underline">@$1</a>');
+        return content.replace(/@([\w.-]+)/g, '<a href="/profile/$1" class="text-blue-500 hover:underline">@$1</a>');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const postContentElement = document.getElementById('postContent');
+        const postContentElement = document.getElementById('postContent-{{$post['id']}}');
         postContentElement.innerHTML = convertMentionsToLinks(postContentElement.innerHTML);
     });
 </script>
