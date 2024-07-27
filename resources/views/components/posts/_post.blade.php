@@ -58,7 +58,7 @@
         @endif
 
         @if($post->quote)
-            <div class="relative bg-content_bg p-3 rounded-lg mb-4 mt-4 border border-divider" onclick="event.stopPropagation(); location.href='/{{$post->quote->quotedPost->user->username}}/{{$post->quote->quotedPost->uuid}}'">
+            <div class="bg-content_bg p-3 rounded-lg mb-4 mt-4 border border-divider" onclick="event.stopPropagation(); location.href='/{{$post->quote->quotedPost->user->username}}/{{$post->quote->quotedPost->uuid}}'">
                 <div class="flex items-center mb-2">
                     <img src="{{$post->quote->quotedPost->user->profile_picture ? asset('storage/' . $post->quote->quotedPost->user->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250')}}" alt="Profielfoto" class="rounded-full w-8 h-8 mr-2">
                     <div>
@@ -105,10 +105,9 @@
 
         <!-- Shares Icon and Count -->
         <div class="flex items-center space-x-2">
-            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+            <svg width="24px" height="24px" viewBox="0 0 24 24" onclick="showCopiedAlert('{{$post->username}}', '{{$post->uuid}}')" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer">
                 <path d="M13.47 4.13998C12.74 4.35998 12.28 5.96 12.09 7.91C6.77997 7.91 2 13.4802 2 20.0802C4.19 14.0802 8.99995 12.45 12.14 12.45C12.34 14.21 12.79 15.6202 13.47 15.8202C15.57 16.4302 22 12.4401 22 9.98006C22 7.52006 15.57 3.52998 13.47 4.13998Z" stroke="#E2CFEA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <p class="text-md mt-3px">{{$post['shares']}}</p>
         </div>
     </div>
 @endauth
