@@ -1,4 +1,5 @@
-<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider mb-4">
+<div class="space-y-4 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider mb-4 relative">
+    <button id="closeButton" onclick="hidePostCreator()" class="absolute top-0 right-2 text-white rounded-full p-2 focus:outline-none text-2xl">&times;</button>
     <div class="flex items-center mb-2">
         <img src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('https://eu.ui-avatars.com/api/?name=John+Doe&size=250') }}" alt="Profielfoto" class="rounded-full w-10 h-10 mr-3 border-2 border-divider">
         <div>
@@ -80,6 +81,11 @@
 
     let quoteSet = false;
 
+    function hidePostCreator() {
+        const postCreator = document.getElementById('postCreator');
+        postCreator.classList.add('hidden');
+    }
+
     function extractQuoteIdFromContent(content) {
         const regex = /\/([^/]+)\/([a-zA-Z0-9_]+)/;
         const match = content.match(regex);
@@ -108,6 +114,10 @@
 
     async function displayQuotedPost() {
         const content = postInput.value;
+
+        const postCreator = document.getElementById('postCreator');
+        postCreator.classList.remove('hidden');
+
         if (!quoteSet) {
             const quoteDetails = extractQuoteIdFromContent(content);
             if (quoteDetails) {
@@ -132,7 +142,7 @@
 
                     quotedPostContainer.classList.remove('hidden');
 
-                    postInput.textContent = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
+                    postInput.value = content.replace(/(?:https?:\/\/(?:localhost:8000|cit-y\.com))?\/([^/]+)\/([a-zA-Z0-9_]+)/, '').trim();
                     quoteSet = true;
                 } else {
                     // console.log('Quoted post not found');

@@ -1,8 +1,10 @@
 @extends('layout')
 
 @section('content')
-    @auth    
-    @include("components.posts._create_post")
+    @auth
+    <div id="postCreator" name="postCreator">
+        @include("components.posts._create_post")
+    </div>
     @endauth   
 
     <div class="min-h-screen">

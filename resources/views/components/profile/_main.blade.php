@@ -80,9 +80,11 @@
         <!-- Tab Contents -->
         <div id="posts" class="tab-content p-4">
             @auth
-            @if(auth()->user()->username === $user->username)
-            @include("components.posts._create_post")
-            @endif
+                @if(auth()->user()->username === $user->username)
+                <div id="postCreator" name="postCreator">
+                    @include("components.posts._create_post")
+                </div>
+                @endif
             @endauth
             @include("components.profile._posts")
         </div>

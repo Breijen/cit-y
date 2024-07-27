@@ -130,6 +130,10 @@
     }
 
     function quotePost(username, uuid) {
+        if(document.getElementById("hidePostCreator") != null) {
+            hidePostCreator.classList.remove('hidden');
+        }
+
         quotedPostContainer.classList.add('hidden');
         quoteIdInput.value = '';
         postInput.value = '';
