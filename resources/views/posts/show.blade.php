@@ -3,9 +3,8 @@
 @section('content')
 
     @auth
-    <div id="postCreator" name="postCreator" class="hidden">
-        @include("components.posts._create_post")
-    </div>
+        @include("components._create_post")
+        @include("components.posts._create_post_modal")
     @endauth   
 
     <div class="min-h-screen">
