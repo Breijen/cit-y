@@ -33,7 +33,7 @@
 
     <div class="flex absolute mt-2 w-full">
         <div class="w-full mt-1 sm:ml-48 sm:mt-0 px-4 sm:px-0">
-            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ $user->lastname }}</h1>
+            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ auth()->user()->hide_last_name ? '' : auth()->user()->lastname }}</h1>
             <p class="text-xs sm:text-sm text-gray-400">{{ $user->username }}</p>
             <p class="mt-2 text-gray-400 text-xs">{{ $user->bio }}</p>
         @auth      

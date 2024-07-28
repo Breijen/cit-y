@@ -63,7 +63,16 @@
                     <input name="firstname" id="firstname" placeholder="First Name" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none" />
                     <input name="lastname" id="lastname" placeholder="Last Name" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none" />
                 </div>
-                <div class="flex items-center border border-divider mt-8 p-2 m-2 rounded">
+
+                <div class="form-group pl-2 pt-2">
+                    <label for="hide_last_name" class="block pl-1 text-xs font-medium text-placeholder">Hide last name</label>
+                    <select id="hide_last_name" name="hide_last_name" class="mt-1 bg-content_bg block w-1/4 p-2 pl-2 pr-10 text-xs text-white border border-divider rounded-md">
+                        <option value="0" {{ auth()->user()->hide_last_name == 0 ? 'selected' : '' }}>No</option>
+                        <option value="1" {{ auth()->user()->hide_last_name == 1 ? 'selected' : '' }}>Yes</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center border border-divider mt-4 p-2 m-2 rounded">
                     <textarea name="bio" id="bio" placeholder="Bio" class="placeholder-placeholder w-full bg-content_bg text-white rounded-lg focus:outline-none"></textarea>
                 </div>
                 <div class="flex items-center border border-divider p-2 mt-4 mb-4 m-2 rounded">
@@ -98,6 +107,9 @@
     const profilePicturePreview = document.getElementById('profilePicturePreview');
 
     editProfileButton.addEventListener('click', function () {
+        const hideLastNameValue = document.getElementById('hide_last_name').value;
+        console.log('hide_last_name value:', hideLastNameValue);
+
         editProfileForm.submit();
     });
 
