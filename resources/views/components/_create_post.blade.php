@@ -1,4 +1,4 @@
-<div class="fixed bottom-16 sm:bottom-4 right-4 z-50">
+<div class="hidden sm:block sm:fixed bottom-16 sm:bottom-4 right-4 z-50">
     <button data-twe-toggle="modal" data-twe-target="#createPostModal" class="bg-content_bg border border-divider text-placeholder p-4 rounded-full shadow-lg focus:outline-none">
         <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10">
               <path
