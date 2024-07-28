@@ -15,7 +15,7 @@
             @error('password')
             <p class="text-red-500 text-xs mt-1">{{$message}}</p>
             @enderror
-            <a href="/register" class="mt-2 ml-1 text-xs text-placeholder hover:text-blue-600">Forgot password?</a>
+            <a href="/forgot-password" class="mt-2 ml-1 text-xs text-placeholder hover:text-blue-600">Forgot password?</a>
         </div>
 
 
