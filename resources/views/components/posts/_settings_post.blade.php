@@ -60,10 +60,6 @@ data-twe-dropdown-menu-ref>
             if (data.status === 'success') {
                 // Show the pinned alert
                 showPinnedAlert();
-
-                // Update the UI accordingly
-                document.querySelectorAll('.post a').forEach(link => link.innerText = 'Pin Post');
-                document.querySelector(`#post-${postId} a`).innerText = 'Unpin Post';
             } else {
                 alert('Failed to pin the post');
             }
