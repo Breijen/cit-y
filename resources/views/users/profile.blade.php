@@ -21,6 +21,7 @@
 
         @auth
             @include("components.alerts._shared")
+            @include("components.alerts._pinned")
             @include("components._create_post")
             @include("components.posts._create_post_modal")
         @endauth   

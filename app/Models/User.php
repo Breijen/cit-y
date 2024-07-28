@@ -86,6 +86,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function pinnedPost()
+    {
+        return $this->belongsTo(Post::class, 'pinned_post_id');
+    }
+
     public function followers()
     {
         return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();

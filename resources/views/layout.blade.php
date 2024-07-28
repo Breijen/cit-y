@@ -22,6 +22,7 @@
 
             <main class="flex-1">
                 @include("components.alerts._shared")
+                @include("components.alerts._pinned")
                 @yield('content')
             </main>
         </div>

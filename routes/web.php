@@ -54,6 +54,9 @@ Route::put('/posts/{post}', [PostController::class,'update'])->middleware(['auth
 //Verwijder een post
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware(['auth', 'verified']);
 
+//Pin een post
+Route::post('/posts/pin/{id}', [PostController::class, 'pinPost'])->name('posts.pin');
+
 //Comment Posten
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware(['auth', 'verified'])->name('comments.store');
 

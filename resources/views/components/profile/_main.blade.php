@@ -76,6 +76,12 @@
             <button class="text-placeholder" onclick="showTab('likes')">Likes</button>
         </div>
 
+        @if($user->pinned_post_id != null)
+            <div id="pinned" class=" p-4">
+                @include("components.profile._pinned")
+            </div>
+        @endif
+
         <!-- Tab Contents -->
         <div id="posts" class="tab-content p-4">
             @include("components.profile._posts")
