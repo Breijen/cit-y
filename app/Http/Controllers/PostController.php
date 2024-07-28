@@ -56,9 +56,8 @@ class PostController extends Controller
             'content' => 'required|string',
             'image_one' => 'nullable|image',
             'quote_id' => 'nullable|exists:posts,id',
-            'pollToggle' => 'nullable',
-            'options' => 'required_if:pollToggle,on|array|max:6', 
-            'options.*' => 'required_if:pollToggle,on|string|max:255'
+            'options' => 'array|nullable',
+            'options.*' => 'string|distinct|nullable',
         ]);
 
 
@@ -91,22 +90,45 @@ class PostController extends Controller
             ]);
         }
 
-        // Handle poll creation if pollToggle is enabled
-        if ($request->input('pollToggle') === 'on') {
-            $poll = Poll::create([
-                'post_id' => $post->id,
-                'question' => 'Poll Question', // Adjust as needed
-            ]);
+        $pollOptions = array_filter($request->input('options', []), function ($option) {
+            return !is_null($option) && $option !== '';
+        });
 
-            foreach ($validatedData['options'] as $option) {
-                PollOption::create([
-                    'poll_id' => $poll->id,
-                    'option_text' => $option,
-                ]);
+        if (count($pollOptions) > 1) {
+            $poll = new Poll();
+            $poll->post_id = $post->id;
+            $poll->save();
+
+            foreach ($pollOptions as $optionText) {
+                $option = new PollOption();
+                $option->poll_id = $poll->id;
+                $option->option_text = $optionText;
+                $option->save();
             }
         }
 
         return back();
+    }
+
+    public function pinPost(Request $request, $id)
+    {
+        $user = auth()->user();
+        $post = Post::find($id);
+
+        if ($post && $post->user_id == $user->id) {
+            if ($request->input('pin')) {
+                // Pin the selected post
+                $user->pinned_post_id = $post->id;
+            } else {
+                // Unpin the post
+                $user->pinned_post_id = null;
+            }
+            $user->save();
+
+            return response()->json(['status' => 'success']);
+        }
+
+        return response()->json(['status' => 'error'], 400);
     }
 
     // Store a new comment

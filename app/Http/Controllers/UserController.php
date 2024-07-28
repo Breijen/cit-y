@@ -35,6 +35,7 @@ class UserController extends Controller
         $formFields['website'] = null;
         $formFields['followers'] = 0;
         $formFields['following'] = 0;
+        $formFields['hide_last_name'] = false;
 
         // Maak de gebruiker aan
         $user = User::create($formFields);
@@ -96,17 +97,18 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        \Log::info('Received request...');
+        \Log::info($request->all());
 
-        // Validate the incoming request data
         $formData = $request->validate([
             'firstname' => 'required|min:3',
             'lastname' => 'required|min:3',
             'bio' => 'nullable|string',
             'website' => 'nullable|string|url',
+            'hide_last_name' => 'required|boolean',
         ]);
 
-        // Handle banner file upload
+        $user->hide_last_name = $request->input('hide_last_name');
+
         if ($request->hasFile('banner')) {
             try {
                 $formData['banner'] = $request->file('banner')->store('banners', 'public');
@@ -116,7 +118,6 @@ class UserController extends Controller
             }
         }
 
-        // Handle profile picture file upload
         if ($request->hasFile('profile_picture')) {
             try {
                 $formData['profile_picture'] = $request->file('profile_picture')->store('profile_pictures', 'public');
@@ -126,20 +127,10 @@ class UserController extends Controller
             }
         }
 
-        // Update the user's information
         \Log::info('Updating user information...');
         $user->update($formData);
-
         \Log::info('User information updated successfully:', $user->toArray());
 
-        // Redirect back to the previous page
         return back();
-    }
-
-    public function showLikedPosts(User $user)
-    {
-        $likedPosts = $user->likedPosts()->orderBy('created_at', 'desc')->get();
-
-        return view('user.liked_posts', compact('user', 'likedPosts'));
     }
 }

@@ -33,7 +33,7 @@
 
     <div class="flex absolute mt-2 w-full">
         <div class="w-full mt-1 sm:ml-48 sm:mt-0 px-4 sm:px-0">
-            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ $user->lastname }}</h1>
+            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ auth()->user()->hide_last_name ? '' : auth()->user()->lastname }}</h1>
             <p class="text-xs sm:text-sm text-gray-400">{{ $user->username }}</p>
             <p class="mt-2 text-gray-400 text-xs">{{ $user->bio }}</p>
         @auth      
@@ -75,6 +75,12 @@
             <button class="text-placeholder" onclick="showTab('media')">Media</button>
             <button class="text-placeholder" onclick="showTab('likes')">Likes</button>
         </div>
+
+        @if($user->pinned_post_id != null)
+            <div id="pinned" class=" p-4">
+                @include("components.profile._pinned")
+            </div>
+        @endif
 
         <!-- Tab Contents -->
         <div id="posts" class="tab-content p-4">

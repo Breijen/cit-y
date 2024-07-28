@@ -32,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
                 ->action('Verify Email Address', $url)
                 ->line('If you did not create an account, no further action is required.')
                 ->line('We hope you enjoy Cit-Y and all it has to offer!')
-                ->salutation('Best regards,<br>The Citizen Team');
+                ->salutation('Best regards,')
+                ->salutation('The Cit-Y Team');
         });
     }
 }

@@ -30,7 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'banner',
         'profile_picture',
         'bio',
-        'website'
+        'website',
+        'hide_last_name',
     ];
 
     /**
@@ -83,6 +84,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Comment::class, 'comment_user_likes')
             ->wherePivot('liked', true)
             ->withTimestamps();
+    }
+
+    public function pinnedPost()
+    {
+        return $this->belongsTo(Post::class, 'pinned_post_id');
     }
 
     public function followers()

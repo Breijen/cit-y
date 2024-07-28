@@ -6,6 +6,13 @@ data-twe-dropdown-menu-ref>
     <li>
         <a
         class="inline-block w-full px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-background focus:bg-background focus:outline-none"
+        onclick="event.stopPropagation(), pinPost({{ $post->id }}, {{ auth()->user()->pinned_post_id == $post->id ? 'true' : 'false' }})">
+        Pin Post
+        </a>
+    </li>
+    <li>
+        <a
+        class="inline-block w-full px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-background focus:bg-background focus:outline-none"
         onclick="event.stopPropagation()"
         data-twe-toggle="modal"
         data-twe-target="#editPostModal"
@@ -29,3 +36,37 @@ data-twe-dropdown-menu-ref>
     </li>
 </ul>
 
+<script>
+    function pinPost(postId, isPinned) {
+        fetch(`/posts/pin/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                pin: !isPinned
+            })
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            if (data.status === 'success') {
+                // Show the pinned alert
+                showPinnedAlert();
+
+                // Update the UI accordingly
+                document.querySelectorAll('.post a').forEach(link => link.innerText = 'Pin Post');
+                document.querySelector(`#post-${postId} a`).innerText = 'Unpin Post';
+            } else {
+                alert('Failed to pin the post');
+            }
+        })
+    }
+</script>
