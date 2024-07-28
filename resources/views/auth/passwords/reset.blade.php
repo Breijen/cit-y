@@ -13,13 +13,13 @@
 
         <title>Cit-Y</title>
 
-        @vite    ('resources/css/app.css')
+        @vite('resources/css/app.css')
 
     </head>
     <body class="bg-background">
         @include("components._header")
 
-        <main class="flex-1 pt-24 px-8 flex justify-center items-center bg-background">
+        <main class="flex-1 pt-24 flex justify-center items-center bg-background">
             <div class="max-w-2xl bg-content_bg rounded-lg border border-divider px-8 py-10 flex flex-col items-center">
                 <h1 class="text-xl font-bold text-center text-white mb-8">Reset Password</h1>
                 <form method="POST" action="{{ route('password.update') }}" class="w-full flex flex-col gap-4">

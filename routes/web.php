@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PollController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
@@ -94,6 +95,10 @@ Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('un
 Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware(['auth', 'verified']);
 
 Route::get('/explore', [ExploreController::class, 'searchRecent'])->name('explore.search');
+
+// POLLS
+Route::post('/posts/{post}/polls', [PollController::class, 'store'])->name('poll.store');
+Route::post('/poll-options/{pollOption}/vote', [PollController::class, 'vote'])->name('poll.vote');
 
 // EMAIL VERIFICATIE
 
