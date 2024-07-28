@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Quote;
+use App\Models\Poll;
+use App\Models\PollOption;
+use App\Models\PollVote;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -15,6 +18,7 @@ class PostController extends Controller
         $posts = Post::orderBy('created_at', 'desc')->with('user', 'comments.user')->get()->map(function ($post) {
             return $post;
         });
+
 
         return view('posts.index', ['posts' => $posts]);
     }
@@ -47,11 +51,16 @@ class PostController extends Controller
     {
         //Content dat gevuld kan worden
 
+        // Validate content and image
         $validatedData = $request->validate([
             'content' => 'required|string',
-            'image_one' => 'nullable|image', 
-            'quote_id' => 'nullable|exists:posts,id' 
+            'image_one' => 'nullable|image',
+            'quote_id' => 'nullable|exists:posts,id',
+            'pollToggle' => 'nullable',
+            'options' => 'required_if:pollToggle,on|array|max:6', 
+            'options.*' => 'required_if:pollToggle,on|string|max:255'
         ]);
+
 
         // Standaard variabelen
 
@@ -66,16 +75,12 @@ class PostController extends Controller
 
         // Handle the image upload
         if ($request->hasFile('image_one')) {
-
             $file = $request->file('image_one');
-
             $path = $file->store('image_one', 'public');
-
             $formFields['image_one'] = $path;
         }
 
         $formFields['user_id'] = auth()->id();
-
         $post = Post::create($formFields);
 
         // Handle the quote_id if present
@@ -84,6 +89,21 @@ class PostController extends Controller
                 'post_id' => $post->id,
                 'quote_id' => $validatedData['quote_id'],
             ]);
+        }
+
+        // Handle poll creation if pollToggle is enabled
+        if ($request->input('pollToggle') === 'on') {
+            $poll = Poll::create([
+                'post_id' => $post->id,
+                'question' => 'Poll Question', // Adjust as needed
+            ]);
+
+            foreach ($validatedData['options'] as $option) {
+                PollOption::create([
+                    'poll_id' => $poll->id,
+                    'option_text' => $option,
+                ]);
+            }
         }
 
         return back();
@@ -131,5 +151,4 @@ class PostController extends Controller
 
         return redirect('/');
     }
-
 }

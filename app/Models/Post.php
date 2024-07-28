@@ -29,6 +29,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function poll()
+    {
+        return $this->hasOne(Poll::class);
+    }
+
     public function quote(){
         return $this->hasOne(Quote::class);
     }
