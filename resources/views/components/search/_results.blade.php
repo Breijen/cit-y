@@ -4,7 +4,9 @@
         @if($users->isNotEmpty())
             <ul class="list-group">
                 @foreach($users as $user)
-                    @include("components.search._profile_card")
+                    @if(!auth()->user()->isBlockedBy($user))
+                        @include("components.search._profile_card")
+                    @endif
                 @endforeach
             </ul>
         @else
