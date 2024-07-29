@@ -101,6 +101,9 @@ Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('un
 Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware(['auth', 'verified']);
 Route::get('/explore', [ExploreController::class, 'searchRecent'])->name('explore.search');
 
+Route::get('/connect', function () {
+    return view('connect.index');
+});
 
 // POLLS
 Route::post('/posts/{post}/polls', [PollController::class, 'store'])->name('poll.store');
