@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 use App\Models\Comment;
 
-class User extends Authenticatable // implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
