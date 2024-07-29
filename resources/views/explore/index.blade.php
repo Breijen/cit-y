@@ -6,7 +6,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         @php
             $pageName = 'Explore';
         @endphp
@@ -14,7 +13,6 @@
         <title>Cit-Y</title>
 
         @vite('resources/css/app.css')
-
     </head>
     <body class="bg-background">
         @include("components._header")
@@ -32,6 +30,5 @@
             @include("components.search._main")
         </main>
         </div>
-
     </body>
 </html>
