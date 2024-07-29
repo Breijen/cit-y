@@ -71,48 +71,8 @@
                 @endif
             </div>
         @endif
-            
-        @if($post->poll)
-        <div class="space-y-2 w-full max-w-4xl mx-auto p-4 mt-4 bg-content_bg rounded-3xl border border-divider mb-4">
-            @php
-                $userVotedOption = null;
-                if (auth()->check()) {
-                    $userVotedOption = \App\Models\PollVote::where('user_id', auth()->id())
-                        ->whereIn('poll_option_id', $post->poll->options->pluck('id'))
-                        ->first();
-                }
-            @endphp
-            @if($userVotedOption || !auth()->check())
-                <div class="space-y-2">
-                    @foreach($post->poll->options as $option)
-                        @php
-                            $totalVotes = $post->poll->options->sum(function ($option) {
-                                return $option->votes->count();
-                            });
-                            $optionVotes = $option->votes->count();
-                            $percentage = $totalVotes > 0 ? round(($optionVotes / $totalVotes) * 100) : 0;
-                        @endphp
-                        <div class="flex items-center mb-2 ">
-                            <div class="w-full bg-content_bg border border-icons rounded-md h-10 relative">
-                                <div class="bg-icons h-10 rounded-md" style="width: {{$percentage}}%"></div>
-                                <span class="absolute inset-0 flex items-center text-white pl-2 font-bold">{{$option->option_text}}</span>
-                                <span class="absolute inset-0 flex items-center justify-end text-white font-bold pr-2 ">{{$percentage}}%</span>
-                            </div>
-                        </div>
-                    @endforeach
-                    <p class="text-xs text-placeholder">{{$totalVotes}} votes</p>
-                </div>
-            @else
-                <div class="space-y-2">
-                    @foreach($post->poll->options as $option)
-                        <button class="w-full bg-content_bg border border-divider hover:bg-icons text-white font-bold py-2 rounded-md text-center" onclick="votePoll({{ $option->id }})">
-                            {{ $option->option_text }}
-                        </button>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-        @endif
+
+        @livewire('poll-component', ['post' => $post])
             
         </div>
     </div>
