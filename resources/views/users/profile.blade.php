@@ -32,7 +32,15 @@
 
 
         <main class="flex-1 pt-4 rounded-3xl">
+        @if(auth()->user()->isBlockedBy($user))
+            <div class="max-w-4xl mx-auto h-auto bg-content_bg rounded-3xl mb-32 border border-divider relative">
+                <div class="flex justify-center items-center font-bold p-4">
+                    <p class="text-white s">You have been blocked</p>
+                </div>
+            </div>
+        @else    
         @include("components.profile._main")
+        @endif
         </main>
         </div>
 

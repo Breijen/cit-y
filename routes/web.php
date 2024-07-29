@@ -13,6 +13,7 @@ use App\Http\Controllers\PollController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\BlockController;
 
 use App\Http\Controllers\ActivityController;
 
@@ -20,6 +21,7 @@ use App\Http\Controllers\ExploreController;
 
 use App\Models\User;
 use App\Models\Post;
+
 
 Auth::routes(['verify' => true]);
 
@@ -91,20 +93,28 @@ Route::put('/users/{user}', [UserController::class, 'update'])->middleware(['aut
 Route::post('/like/posts/{post}', [LikeController::class, 'likePost'])->name('likePost');
 Route::post('/like/comments/{comment}', [LikeController::class, 'likeComment'])->name('likeComment');
 
-//Volgen en ontvolgen
+// FOLLOW
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 
-Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware(['auth', 'verified']);
 
+Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index')->middleware(['auth', 'verified']);
 Route::get('/explore', [ExploreController::class, 'searchRecent'])->name('explore.search');
+
 
 // POLLS
 Route::post('/posts/{post}/polls', [PollController::class, 'store'])->name('poll.store');
 Route::post('/poll-options/{pollOption}/vote', [PollController::class, 'vote'])->name('poll.vote');
 
-// EMAIL VERIFICATIE
 
+// BLOCK
+Route::middleware('auth')->group(function () {
+    Route::post('/block/{user}', [BlockController::class, 'block'])->name('block.user');
+    Route::post('/unblock/{user}', [BlockController::class, 'unblock'])->name('unblock.user');
+});
+
+
+// EMAIL VERIFICATIE
 Route::get('/email/verify', function () {
     return view('auth.verify');
 })->middleware('auth')->name('verification.notice');

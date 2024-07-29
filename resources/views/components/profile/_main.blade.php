@@ -33,7 +33,7 @@
 
     <div class="flex absolute mt-2 w-full">
         <div class="w-full mt-1 sm:ml-48 sm:mt-0 px-4 sm:px-0">
-            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ auth()->user()->hide_last_name ? '' : auth()->user()->lastname }}</h1>
+            <h1 class="text-sm sm:text-2xl font-bold text-white">{{ $user->firstname }} {{ $user->hide_last_name ? '' : $user->lastname }}</h1>
             <p class="text-xs sm:text-sm text-gray-400">{{ $user->username }}</p>
             <p class="mt-2 text-gray-400 text-xs">{{ $user->bio }}</p>
         @auth      
@@ -65,6 +65,38 @@
                 <p>{{ $user->website }}</p>
             </div>
         </div>
+    </div>
+
+    <div class="relative"> <!-- Add relative positioning to the parent div -->
+    @auth    
+        @if(auth()->user()->id != $user->id)
+            <div class="absolute bottom-0 right-0 mb-4 mr-4" data-twe-dropdown-ref> <!-- Position the button to the bottom-right -->
+                <button
+                class="hover:bg-background rounded-md p-1"
+                type="button"
+                id="profileSettingsDropdown"
+                data-twe-dropdown-toggle-ref
+                aria-expanded="false"
+                data-twe-ripple-init
+                data-twe-ripple-color="light">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M7.75745 10.5858L9.17166 9.17154L12.0001 12L14.8285 9.17157L16.2427 10.5858L12.0001 14.8284L7.75745 10.5858Z"
+                        fill="#3A3E41"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                        fill="#3A3E41"
+                      />
+                    </svg>
+                </button>
+            @include("components.profile._settings")
+            </div>
+        @endif    
+    @endauth  
     </div>
 
     <!-- Tabs -->

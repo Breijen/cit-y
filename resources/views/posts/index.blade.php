@@ -10,7 +10,9 @@
         <div class="space-y-2 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-3xl border border-divider">
         @if($posts->count() > 0)
             @foreach($posts->sortByDesc('created_at') as $post)
-                @include("components.posts._post")
+                @if(!auth()->user()->isBlockedBy($post->user))
+                    @include("components.posts._post")
+                @endif
             @endforeach
             @auth
                 @include("components.posts._create_comment_modal")
