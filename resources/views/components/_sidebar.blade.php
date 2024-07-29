@@ -1,6 +1,6 @@
 <aside name="sidebar" class="hidden md:flex sm:fixed flex z-20 top-0 fixed h-full w-8 sm:w-20 flex-col space-y-14 items-center justify-center bg-background text-icons">
     <!-- For you -->
-    <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('/') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -40,7 +40,7 @@
     </a>
 
     <!-- Activity -->
-    <a href="/activity" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/activity" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('activity') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -51,14 +51,14 @@
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
-            d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z"
+            d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z "
             fill="currentColor"
           />
         </svg>
     </a>
 
     <!-- Explore -->
-    <a href="/explore" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/explore" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('explore') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -99,7 +99,7 @@
 
 <aside class="block md:hidden fixed bottom-0 z-20 w-full flex justify-around items-center bg-background text-icons py-2">
     <!-- For you -->
-    <a href="/" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('/') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -139,7 +139,7 @@
     </a>
 
     <!-- Activity -->
-    <a href="/activity" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/activity" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('activity') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -174,7 +174,7 @@
     </button>
 
     <!-- Explore -->
-    <a href="/explore" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/explore" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('explore') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
