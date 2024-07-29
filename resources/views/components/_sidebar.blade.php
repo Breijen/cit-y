@@ -1,6 +1,6 @@
 <aside name="sidebar" class="hidden md:flex sm:fixed flex z-20 top-0 fixed h-full w-8 sm:w-20 flex-col space-y-14 items-center justify-center bg-background text-icons">
     <!-- For you -->
-    <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('/') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -40,7 +40,7 @@
     </a>
 
     <!-- Activity -->
-    <a href="/activity" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/activity" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('activity') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -51,14 +51,14 @@
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
-            d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z"
+            d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z "
             fill="currentColor"
           />
         </svg>
     </a>
 
     <!-- Explore -->
-    <a href="/explore" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/explore" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('explore') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -77,7 +77,7 @@
 
 
     <!-- Configuration -->
-    <div class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/profile/{{ auth()->user()->username }}" class="h-6 w-6 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white ">
         <svg
           width="32"
           height="32"
@@ -85,21 +85,24 @@
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <path d="M15 4H21V10H15V4Z" fill="currentColor" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M12 5C12.5523 5 13 4.55228 13 4C13 3.44772 12.5523 3 12 3C11.4477 3 11 3.44772 11 4C11 4.55228 11.4477 5 12 5ZM12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13ZM12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21ZM15 4C15 5.65685 13.6569 7 12 7C10.3431 7 9 5.65685 9 4C9 2.34315 10.3431 1 12 1C13.6569 1 15 2.34315 15 4ZM15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12ZM12 23C13.6569 23 15 21.6569 15 20C15 18.3431 13.6569 17 12 17C10.3431 17 9 18.3431 9 20C9 21.6569 10.3431 23 12 23Z"
+            d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12H17C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12H3Z"
+            fill="currentColor"
+          />
+          <path
+            d="M6 10C7.65685 10 9 8.65685 9 7C9 5.34315 7.65685 4 6 4C4.34315 4 3 5.34315 3 7C3 8.65685 4.34315 10 6 10Z"
             fill="currentColor"
           />
         </svg>
-    </div>
+    </a>
 </aside>
 
 <!-- FOOTER ALS HET SCHERM TE KLEIN IS -->
 
 <aside class="block md:hidden fixed bottom-0 z-20 w-full flex justify-around items-center bg-background text-icons py-2">
     <!-- For you -->
-    <a href="/" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('/') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -139,7 +142,7 @@
     </a>
 
     <!-- Activity -->
-    <a href="/activity" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/activity" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('activity') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -174,7 +177,7 @@
     </button>
 
     <!-- Explore -->
-    <a href="/explore" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/explore" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white {{ Request::is('explore') ? 'text-gray-800 bg-white' : 'hover:text-gray-800 hover:bg-white' }}">
         <svg
           width="32"
           height="32"
@@ -192,7 +195,7 @@
     </a>
 
     <!-- Configuration -->
-    <div class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+    <a href="/profile/{{ auth()->user()->username }}" class="h-10 w-10 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
         <svg
           width="32"
           height="32"
@@ -200,12 +203,15 @@
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <path d="M15 4H21V10H15V4Z" fill="currentColor" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M12 5C12.5523 5 13 4.55228 13 4C13 3.44772 12.5523 3 12 3C11.4477 3 11 3.44772 11 4C11 4.55228 11.4477 5 12 5ZM12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13ZM12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21ZM15 4C15 5.65685 13.6569 7 12 7C10.3431 7 9 5.65685 9 4C9 2.34315 10.3431 1 12 1C13.6569 1 15 2.34315 15 4ZM15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12ZM12 23C13.6569 23 15 21.6569 15 20C15 18.3431 13.6569 17 12 17C10.3431 17 9 18.3431 9 20C9 21.6569 10.3431 23 12 23Z"
+            d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12H17C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12H3Z"
+            fill="currentColor"
+          />
+          <path
+            d="M6 10C7.65685 10 9 8.65685 9 7C9 5.34315 7.65685 4 6 4C4.34315 4 3 5.34315 3 7C3 8.65685 4.34315 10 6 10Z"
             fill="currentColor"
           />
         </svg>
-    </div>
+    </a>
 </aside>
