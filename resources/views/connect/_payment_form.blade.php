@@ -1,11 +1,31 @@
-<form id="payment-form" class="bg-content_bg border border-divider text-placeholder p-6 rounded-lg shadow-lg fixed top-8 right-8 z-50 w-80">
+<div class="text-placeholder p-6 fixed top-8 right-8 z-50 w-80">
+    <div class="mb-4 flex justify-between items-center bg-content_bg border border-divider rounded-md pl-2">
+        <span id="current-tokens" class="block text-sm text-white font-medium">Huidige tokens: 0</span>
+        <button id="show-payment-form" class="bg-icons hover:bg-icons-light text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 4C11.4477 4 11 4.44772 11 5V11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H13V5C13 4.44772 12.5523 4 12 4Z"
+                fill="currentColor"
+              />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<form id="payment-form" class="hidden bg-content_bg border border-divider text-placeholder p-6 rounded-lg shadow-lg fixed top-14 right-14 z-50 w-80">
     <div class="mb-4">
-        <label for="amount" class="block text-sm font-medium">Tokens</label>
+        <label for="amount" class="block text-sm font-medium">Add C-Units</label>
         <select id="amount" name="amount" class="mt-1 block w-full p-2 bg-content_bg border border-divider rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-            <option value="100">100 Tokens - $1</option>
-            <option value="500">500 Tokens - $5</option>
-            <option value="1000">1000 Tokens - $10</option>
-            <option value="5000">5000 Tokens - $50</option>
+            <option value="100">100 C-Units - $1</option>
+            <option value="500">500 C-Units - $5</option>
+            <option value="1000">1000 C-Units - $10</option>
+            <option value="5000">5000 C-Units - $50</option>
         </select>
     </div>
     <div id="ideal-element" class="p-2 bg-white border border-divider rounded-md shadow-sm mb-4"><!-- Stripe.js injects the Card Element --></div>
@@ -113,4 +133,14 @@
             errorElement.textContent = error.message;
         });
     });
+
+    // Show the payment form when the button is clicked
+    document.getElementById('show-payment-form').addEventListener('click', function() {
+        document.getElementById('payment-form').classList.remove('hidden');
+    });
+
+    var currentBalanceToInt = parseInt('{{ auth()->user()->currency_balance }}')
+
+    // Update current tokens display (for demonstration purposes, this should be fetched from the server)
+    document.getElementById('current-tokens').textContent = currentBalanceToInt + ' C-Units'; // Example token amount
 </script>

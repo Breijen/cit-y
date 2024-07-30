@@ -22,10 +22,18 @@
         @include("connect._payment_form")
 
         <main>
-
+            <div class="fixed flex justify-center items-center h-20 bottom-0 w-full bg-background text-white z-50">
+                <button id="button-selector" class="bg-content_bg p-2 border border-divider">
+                    SELECTOR
+                </button>
+                <button id="button-placer" class="bg-content_bg p-2 border border-divider">
+                    PLACER
+                </button>
+            </div>
         </main>
     </div>
 
     @vite('resources/js/connect/main.js')
 </body>
 </html>
+
