@@ -23,8 +23,12 @@ use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\WebhookController;
 
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ItemController;
+
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Inventory;
 
 
 Auth::routes(['verify' => true]);
@@ -106,8 +110,14 @@ Route::get('/activity', [ActivityController::class, 'index'])->name('activity.in
 Route::get('/explore', [ExploreController::class, 'searchRecent'])->name('explore.search');
 
 Route::get('/connect', function () {
-    return view('connect.index');
-});
+    $user = Auth::user();
+    $existingInventory = Inventory::where('user_id', $user->id)->first();
+
+    return view('connect.index', [
+        'user' => $user,
+        'existingInventory' => $existingInventory
+    ]);
+})->middleware(['auth', 'verified']);
 
 // POLLS
 Route::post('/posts/{post}/polls', [PollController::class, 'store'])->name('poll.store');
@@ -196,3 +206,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/webhook', [WebhookController::class, 'handleWebhook'])->withoutMiddleware([VerifyCsrfToken::class]);
+
+// INVENTORY SYSTEM VOOR CONNECT
+Route::post('/users/{userId}/create-inventory', [InventoryController::class, 'createInventory'])->name('inventory.create');
+Route::get('/users/{userId}/inventory', [InventoryController::class, 'show'])->name('inventory.show');
+Route::post('/inventories/{inventoryId}/items', [ItemController::class, 'store'])->name('items.store');
+Route::put('/inventories/{inventoryId}/items/{itemId}', [ItemController::class, 'update'])->name('items.update');
+Route::delete('/inventories/{inventoryId}/items/{itemId}', [ItemController::class, 'destroy'])->name('items.destroy');

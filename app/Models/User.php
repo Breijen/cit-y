@@ -140,4 +140,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->blockedUsers()->where('blocked_user_id', $user->id)->exists();
     }
+
+    public function inventory()
+    {
+        return $this->hasOne(Inventory::class);
+    }
 }
