@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
@@ -18,6 +19,9 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ActivityController;
 
 use App\Http\Controllers\ExploreController;
+
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\WebhookController;
 
 use App\Models\User;
 use App\Models\Post;
@@ -184,3 +188,11 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update.submit');
+
+// STRIPE EN PAYMENT
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/create-payment-intent', [PurchaseController::class, 'createPaymentIntent']);
+});
+
+Route::post('/webhook', [WebhookController::class, 'handleWebhook'])->withoutMiddleware([VerifyCsrfToken::class]);

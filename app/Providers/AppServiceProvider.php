@@ -6,6 +6,11 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\URL;
+
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +40,15 @@ class AppServiceProvider extends ServiceProvider
                 ->salutation('Best regards,')
                 ->salutation('The Cit-Y Team');
         });
+
+        Cashier::calculateTaxes();
+
+        // Exclude CSRF verification for specific routes
+        if (Request::is('webhook/*')) {
+            URL::setRequest(Request::instance());
+            Route::post('webhook', function () {
+                return 'CSRF check disabled for this route.';
+            })->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+        }
     }
 }

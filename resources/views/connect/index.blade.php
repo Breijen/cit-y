@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
         $pageName = 'Explore';
@@ -18,17 +19,13 @@
         @include("components._sidebar")
         @include("components.alerts._shared")
 
-        @auth
-            @include("components._create_post")
-            @include("components.posts._create_post_modal")
-        @endauth   
+        @include("connect._payment_form")
 
         <main>
 
         </main>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/OrbitControls.js"></script>
     @vite('resources/js/connect/main.js')
 </body>
 </html>
