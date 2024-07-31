@@ -91,6 +91,10 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 //Log gebruiker in
 Route::post('/users/authenticate', [UserController::class, 'authenticate'])->middleware('guest');
 
+Route::get('/csrf-token', function (Request $request) {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
 //Log gebruiker uit
 Route::post('/logout', [UserController::class, 'logout']);
 

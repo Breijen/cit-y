@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 
@@ -59,6 +60,23 @@ class UserController extends Controller
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
+
+    public function loginGodot(Request $request){
+        $formFields = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string'
+            // other validation rules
+        ]);
+
+        if (Auth::attempt($formFields)) {
+            $user = Auth::user();
+            $token = $user->createToken('game-token')->plainTextToken;
+
+            return response()->json(['token' => $token]);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 
         

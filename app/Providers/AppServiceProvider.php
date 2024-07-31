@@ -50,5 +50,13 @@ class AppServiceProvider extends ServiceProvider
                 return 'CSRF check disabled for this route.';
             })->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
         }
+
+        // Exclude CSRF verification for specific routes
+        if (Request::is('api/*')) {
+            URL::setRequest(Request::instance());
+            Route::post('api', function () {
+                return 'CSRF check disabled for this route.';
+            })->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+        }
     }
 }
