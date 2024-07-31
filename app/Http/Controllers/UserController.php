@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\Post;
+use App\Models\Inventory;
 
 class UserController extends Controller
 {
@@ -73,7 +74,16 @@ class UserController extends Controller
             $user = Auth::user();
             $token = $user->createToken('game-token')->plainTextToken;
 
-            return response()->json(['token' => $token]);
+            // Check if the user has an inventory
+            $inventory = Inventory::firstOrCreate(
+                ['user_id' => $user->id], // condition
+                ['items' => json_encode([])] // default values
+            );
+
+            return response()->json([
+                'token' => $token,
+                'inventory' => $inventory
+            ]);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
