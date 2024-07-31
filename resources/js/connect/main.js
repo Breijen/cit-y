@@ -22,7 +22,6 @@ scene.background = gradientTexture;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let selectedObject = undefined;
-
 let roomfloor = [];
 let onObjectSelected = undefined; // Define it here
 
@@ -162,10 +161,14 @@ function handlePlaceTool(tile, x, y) {
     if (tile.furnitureId) {
         console.log(tile.furnitureId);
     } else {
-        const newFurniture = createAssetInstance('block', x, y);
-        scene.add(newFurniture);
-        // Update the tile data to reflect the new furniture
-        tile.furnitureId = newFurniture.id;
-        console.log('Placed new furniture at', x, y);
+        createAssetInstance('washer', x, y, scene, (newFurniture) => {
+            if (newFurniture) {
+                // Update the tile data to reflect the new furniture
+                tile.furnitureId = newFurniture.id;
+                console.log('Placed new furniture at', x, y);
+            } else {
+                console.log('Failed to place new furniture at', x, y);
+            }
+        });
     }
 }

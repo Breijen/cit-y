@@ -210,6 +210,8 @@ Route::post('/webhook', [WebhookController::class, 'handleWebhook'])->withoutMid
 // INVENTORY SYSTEM VOOR CONNECT
 Route::post('/users/{userId}/create-inventory', [InventoryController::class, 'createInventory'])->name('inventory.create');
 Route::get('/users/{userId}/inventory', [InventoryController::class, 'show'])->name('inventory.show');
-Route::post('/inventories/{inventoryId}/items', [ItemController::class, 'store'])->name('items.store');
-Route::put('/inventories/{inventoryId}/items/{itemId}', [ItemController::class, 'update'])->name('items.update');
-Route::delete('/inventories/{inventoryId}/items/{itemId}', [ItemController::class, 'destroy'])->name('items.destroy');
+Route::get('/user/{userId}/inventory', [InventoryController::class, 'checkInventory'])->middleware(['auth', 'verified'])->name('inventory.check');
+Route::get('/user/{userId}/inventory/items', [ItemController::class, 'getInventoryItems'])->middleware(['auth', 'verified'])->name('items.inventory');
+
+Route::post('/inventories/{inventoryId}/items/buy', [ItemController::class, 'buy'])->middleware(['auth', 'verified'])->name('items.buy');
+Route::get('connect/items/predefined', [ItemController::class, 'predefinedItems'])->middleware(['auth', 'verified'])->name('items.predefined');

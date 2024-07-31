@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId('inventory_id')->constrained()->onDelete('cascade');
             $table->string('item_name');
             $table->integer('item_quantity');
+            $table->string('item_model');
+            $table->string('item_image');
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['item_name', 'item_quantity'];
+    protected $fillable = ['item_name', 'item_quantity', 'item_model'];
 
     public function inventory()
     {

@@ -34,4 +34,13 @@ class InventoryController extends Controller
         error_log('Some message here.');
         return view('inventory.show', ['inventory' => $user->inventory]);
     }
+
+    public function checkInventory($userId)
+    {
+        $existingInventory = Inventory::where('user_id', $userId)->first();
+        return response()->json([
+            'exists' => $existingInventory ? true : false,
+            'inventoryId' => $existingInventory ? $existingInventory->id : null
+        ]);
+    }
 }

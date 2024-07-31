@@ -5,32 +5,57 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Item;
+use Illuminate\Support\Facades\File;
 
 class ItemController extends Controller
 {
-    public function create($inventoryId)
+    public function predefinedItems()
     {
-        return view('item.create', ['inventoryId' => $inventoryId]);
+        $path = public_path('assets/connect/items.json');
+        if (!File::exists($path)) {
+            return response()->json(['message' => 'Predefined items not found.'], 404);
+        }
+
+        $items = json_decode(File::get($path), true);
+        return response()->json($items, 200);
     }
 
-    public function store(Request $request, $inventoryId)
+    public function buy(Request $request, $inventoryId)
     {
         $inventory = Inventory::findOrFail($inventoryId);
-        $inventory->items()->create($request->all());
-        return redirect()->route('inventory.show', ['userId' => $inventory->user_id]);
+
+        $path = public_path('assets/connect/items.json');
+        if (!File::exists($path)) {
+            return response()->json(['message' => 'Predefined items not found.'], 404);
+        }
+
+        $items = json_decode(File::get($path), true);
+        $itemData = collect($items)->firstWhere('id', $request->item_id);
+
+        if (!$itemData) {
+            return response()->json(['message' => 'Item not found.'], 404);
+        }
+
+        // Assume there's some logic here to check user balance and deduct the price
+
+        $item = new Item([
+            'item_name' => $itemData['item_name'],
+            'item_quantity' => $itemData['item_quantity'],
+            'item_model' => $itemData['item_model']
+        ]);
+        $inventory->items()->save($item);
+
+        return response()->json(['message' => 'Item purchased successfully.', 'item' => $item]);
     }
 
-    public function update(Request $request, $inventoryId, $itemId)
+    public function getInventoryItems($userId)
     {
-        $item = Item::where('inventory_id', $inventoryId)->findOrFail($itemId);
-        $item->update($request->all());
-        return redirect()->route('inventory.show', ['userId' => $item->inventory->user_id]);
-    }
+        $inventory = Inventory::where('user_id', $userId)->first();
+        if (!$inventory) {
+            return response()->json(['message' => 'Inventory not found.'], 404);
+        }
 
-    public function destroy($inventoryId, $itemId)
-    {
-        $item = Item::where('inventory_id', $inventoryId)->findOrFail($itemId);
-        $item->delete();
-        return redirect()->route('inventory.show', ['userId' => $item->inventory->user_id]);
+        $items = $inventory->items;
+        return response()->json($items);
     }
 }
