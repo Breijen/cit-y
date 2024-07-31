@@ -47,14 +47,15 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
         $formFields = $request->validate([
             'username' => 'required|string',
             'password' => 'required|string'
             // other validation rules
         ]);
 
-        if(auth()->attempt($formFields)) {
+        if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
             return redirect('/');
@@ -62,33 +63,6 @@ class UserController extends Controller
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
-
-    public function loginGodot(Request $request){
-        $formFields = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string'
-            // other validation rules
-        ]);
-
-        if (Auth::attempt($formFields)) {
-            $user = Auth::user();
-            $token = $user->createToken('game-token')->plainTextToken;
-
-            // Check if the user has an inventory
-            $inventory = Inventory::firstOrCreate(
-                ['user_id' => $user->id], // condition
-                ['items' => json_encode([])] // default values
-            );
-
-            return response()->json([
-                'token' => $token,
-                'inventory' => $inventory
-            ]);
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
         
     public function logout(Request $request){
         auth()->logout();
@@ -160,5 +134,34 @@ class UserController extends Controller
         \Log::info('User information updated successfully:', $user->toArray());
 
         return back();
+    }
+
+    // CIT-Y FUNCTIONS
+
+    public function loginGodot(Request $request)
+    {
+        $formFields = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string'
+            // other validation rules
+        ]);
+
+        if (Auth::attempt($formFields)) {
+            $user = Auth::user();
+            $token = $user->createToken('game-token')->plainTextToken;
+
+            // Check if the user has an inventory
+            $inventory = Inventory::firstOrCreate(
+                ['user_id' => $user->id], // condition
+                ['items' => json_encode([])] // default values
+            );
+
+            return response()->json([
+                'token' => $token,
+                'inventory' => $inventory
+            ]);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }

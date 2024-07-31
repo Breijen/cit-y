@@ -146,4 +146,9 @@ class User extends Authenticatable // implements MustVerifyEmail
     {
         return $this->hasOne(Inventory::class);
     }
+
+    public function apartment()
+    {
+        return $this->hasOne(Apartment::class);
+    }
 }
