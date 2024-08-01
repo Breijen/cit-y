@@ -148,7 +148,7 @@ class UserController extends Controller
 
         if (Auth::attempt($formFields)) {
             $user = Auth::user();
-            $token = $user->createToken('game-token')->plainTextToken;
+            $token = $user->createToken('game-token')->accessToken;
 
             // Check if the user has an inventory
             $inventory = Inventory::firstOrCreate(
@@ -157,8 +157,8 @@ class UserController extends Controller
             );
 
             return response()->json([
+                'user_id' => $user->id,
                 'token' => $token,
-                'inventory' => $inventory
             ]);
         }
 
