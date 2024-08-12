@@ -1,7 +1,7 @@
 # About Cit-Y
 Cit-Y is a feature-rich Threads/Twitter clone built using the Laravel framework, designed to mimic the functionality of a social media thread system. This project leverages modern web development technologies to provide a seamless user experience and powerful functionality.
 
-##Key Features
+## Key Features
 - Real-time Interactions: Built with Livewire for seamless, real-time UI updates without page reloads.
 - Database Efficiency: Leverages MySQL for dependable data storage and retrieval, using Laravel's Eloquent ORM for seamless database operations.
 - User Authentication: Features a full suite of authentication options, including user registration, login, and password recovery.
