@@ -22,7 +22,7 @@ class UserController extends Controller
             'firstname' => 'required|min:3',
             'lastname' => 'required|min:3',
             'email' => ['required','email', Rule::unique('users', 'email')],
-            'username' => 'required|string|min:3',
+            'username' => ['required', 'string', 'min:3', Rule::unique('users', 'username')],
             'password' => 'required|confirmed|min:8'
             // other validation rules
         ]);
