@@ -23,18 +23,21 @@ class ActivityController extends Controller
             ->get();
 
         // Haal alle posts op met likes, exclusief de likes van de ingelogde gebruiker
-        $postsWithLikes = Post::whereHas('likedBy', function ($query) use ($userId) {
-            $query->where('user_id', '!=', $userId);
-        })->with([
+        $postsWithLikes = Post::where('user_id', $userId) // Ensure the posts belong to the logged-in user
+            ->whereHas('likedBy', function ($query) use ($userId) {
+                $query->where('user_id', '!=', $userId);
+            })->with([
                     'user',
                     'likedBy' => function ($query) use ($userId) {
                         $query->where('user_id', '!=', $userId)->orderBy('post_user_likes.created_at', 'desc');
                     }
-                ])
-                ->get();
+                ])->get();
 
         // Retrieve posts quoted by others
-        $quotedPosts = Post::where('user_id', $userId)->get();
+        $quotedPosts = Post::where('user_id', $userId)
+            ->whereHas('quotedBy')
+            ->with('quotedBy.user')
+            ->get();
 
         // Haal volgers op, exclusief de ingelogde gebruiker zelf
         $followers = auth()->user()->followers()->where('follower_id', '!=', $userId)->get();

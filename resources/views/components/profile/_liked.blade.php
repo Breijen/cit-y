@@ -1,7 +1,7 @@
 <div class="h-auto">
     <div class="space-y-2 w-full max-w-4xl mx-auto p-4 bg-content_bg rounded-lg border border-divider">
-        @if(auth()->user()->likedPosts->count() > 0)
-            @foreach(auth()->user()->likedPosts as $post)
+        @if($user->likedPosts->count() > 0)
+            @foreach($user->likedPosts as $post)
                 @include("components.posts._post")
             @endforeach
         @else
